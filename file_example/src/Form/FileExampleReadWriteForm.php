@@ -11,7 +11,7 @@ use Drupal\Core\State\StateInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 use Drupal\Core\Url;
 use Drupal\file\FileInterface;
-use Drupal\stream_wrapper_example\StreamWrapper\SessionWrapper;
+use Drupal\stream_wrapper_example\SessionHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -51,15 +51,11 @@ class FileExampleReadWriteForm extends FormBase {
   protected $streamWrapperManager;
 
   /**
-   * Indicator variable for the session:// scheme being available.
+   * The session helper.
    *
-   * @var bool
-   *
-   * @todo Remove this since we have a hard dependency on
-   *   stream_wrapper_example.
-   *   https://www.drupal.org/project/examples/issues/2990336
+   * @var \Drupal\stream_wrapper_example\SessionHelper
    */
-  protected $sessionSchemeEnabled;
+  protected $sessionHelper;
 
   /**
    * Service for invoking hooks and other module operations.
@@ -97,7 +93,8 @@ class FileExampleReadWriteForm extends FormBase {
     StreamWrapperManagerInterface $stream_wrapper_manager,
     ModuleHandlerInterface $module_handler,
     RequestStack $request_stack,
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
+    SessionHelper $session_helper
   ) {
     $this->state = $state;
     $this->fileSystem = $file_system;
@@ -105,7 +102,7 @@ class FileExampleReadWriteForm extends FormBase {
     $this->moduleHandler = $module_handler;
     $this->requestStack = $request_stack;
     $this->entityTypeManager = $entity_type_manager;
-    $this->sessionSchemeEnabled = $this->moduleHandler->moduleExists('stream_wrapper_example');
+    $this->sessionHelper = $session_helper;
   }
 
   /**
@@ -118,9 +115,11 @@ class FileExampleReadWriteForm extends FormBase {
       $container->get('stream_wrapper_manager'),
       $container->get('module_handler'),
       $container->get('request_stack'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('stream_wrapper_example.session_helper')
     );
     $form->setMessenger($container->get('messenger'));
+    $form->setStringTranslation($container->get('string_translation'));
     return $form;
   }
 
@@ -143,26 +142,8 @@ class FileExampleReadWriteForm extends FormBase {
    *   The URI of the default file.
    */
   protected function getDefaultFile() {
-    $fall_back_value = $this->sessionSchemeEnabled ? 'session://drupal.txt' : 'public://drupal.txt';
-    $default_file = $this->state->get('file_example_default_file', $fall_back_value);
+    $default_file = $this->state->get('file_example_default_file', 'session://drupal.txt');
     return $default_file;
-  }
-
-  /**
-   * Fetch a SessionWrapper object.
-   *
-   * This is used to change relevant attributes of the Session. This will return
-   * FALSE if the stream_wrapper_example is not enabled.
-   *
-   * @return Drupal\stream_wrapper_example\StreamWrapper\SessionWrapper|bool
-   *   Wrapper object to manipulate the SESSION storage or FALSE if the session
-   *   wrapper is unavailable.
-   */
-  protected function getSessionWrapper() {
-    if ($this->sessionSchemeEnabled) {
-      return new SessionWrapper($this->requestStack);
-    }
-    return FALSE;
   }
 
   /**
@@ -184,8 +165,7 @@ class FileExampleReadWriteForm extends FormBase {
    *   The URI of the default directory.
    */
   protected function getDefaultDirectory() {
-    $fall_back_value = $this->sessionSchemeEnabled ? 'session://directory1' : 'public://directory1';
-    $default_directory = $this->state->get('file_example_default_directory', $fall_back_value);
+    $default_directory = $this->state->get('file_example_default_directory', 'session://directory1');
     return $default_directory;
   }
 
@@ -385,13 +365,10 @@ class FileExampleReadWriteForm extends FormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Debugging'),
     ];
-    // The Session Wrapper Exampple is not yet committed, so
-    // we hide this button until this happens.
     $form['debug']['show_raw_session'] = [
       '#type' => 'submit',
       '#value' => $this->t('Show raw $_SESSION contents'),
       '#submit' => ['::handleShowSession'],
-      '#access' => $this->sessionSchemeEnabled,
     ];
     $form['debug']['reset_session'] = [
       '#type' => 'submit',
@@ -438,34 +415,28 @@ class FileExampleReadWriteForm extends FormBase {
       $file_data = $file_object->toArray();
       if ($url) {
         $this->messenger()->addMessage(
-         $this->t('Saved managed file: %file to destination %destination (accessible via <a href=":url">this URL</a>, actual uri=<span id="uri">@uri</span>)',
-            [
-              '%file' => print_r($file_data, TRUE),
-              '%destination' => $uri,
-              '@uri' => $file_object->getFileUri(),
-              ':url' => $url->toString(),
-            ]
-          )
+          $this->t('Saved managed file: %file to destination %destination (accessible via <a href=":url">this URL</a>, actual uri=<span id="uri">@uri</span>)', [
+            '%file' => print_r($file_data, TRUE),
+            '%destination' => $uri,
+            '@uri' => $file_object->getFileUri(),
+            ':url' => $url->toString(),
+          ])
         );
       }
       else {
         // This Uri is not routable, so we cannot give a link to it.
         $this->messenger()->addMessage(
-         $this->t('Saved managed file: %file to destination %destination (no URL, since this stream type does not support it)',
-            [
-              '%file' => print_r($file_data, TRUE),
-              '%destination' => $uri,
-              '@uri' => $file_object->getFileUri(),
-            ]
-          )
+          $this->t('Saved managed file: %file to destination %destination (no URL, since this stream type does not support it)', [
+            '%file' => print_r($file_data, TRUE),
+            '%destination' => $uri,
+            '@uri' => $file_object->getFileUri(),
+          ])
         );
-
       }
     }
     else {
       $this->messenger()->addMessage($this->t('Failed to save the managed file'), 'error');
     }
-
   }
 
   /**
@@ -502,23 +473,19 @@ class FileExampleReadWriteForm extends FormBase {
       $this->setDefaultFile($filename);
       if ($url) {
         $this->messenger()->addMessage(
-         $this->t('Saved file as %filename (accessible via <a href=":url">this URL</a>, uri=<span id="uri">@uri</span>)',
-            [
-              '%filename' => $filename,
-              '@uri' => $filename,
-              ':url' => $url->toString(),
-            ]
-          )
+          $this->t('Saved file as %filename (accessible via <a href=":url">this URL</a>, uri=<span id="uri">@uri</span>)', [
+            '%filename' => $filename,
+            '@uri' => $filename,
+            ':url' => $url->toString(),
+          ])
         );
       }
       else {
         $this->messenger()->addMessage(
-         $this->t('Saved file as %filename (not accessible externally)',
-            [
-              '%filename' => $filename,
-              '@uri' => $filename,
-            ]
-          )
+          $this->t('Saved file as %filename (not accessible externally)', [
+            '%filename' => $filename,
+            '@uri' => $filename,
+          ])
         );
       }
     }
@@ -575,26 +542,21 @@ class FileExampleReadWriteForm extends FormBase {
     $this->setDefaultFile($destination);
     if ($url) {
       $this->messenger()->addMessage(
-       $this->t('Saved file as %filename (accessible via <a href=":url">this URL</a>, uri=<span id="uri">@uri</span>)',
-          [
-            '%filename' => $destination,
-            '@uri' => $destination,
-            ':url' => $url->toString(),
-          ]
-        )
+        $this->t('Saved file as %filename (accessible via <a href=":url">this URL</a>, uri=<span id="uri">@uri</span>)', [
+          '%filename' => $destination,
+          '@uri' => $destination,
+          ':url' => $url->toString(),
+        ])
       );
     }
     else {
       $this->messenger()->addMessage(
-       $this->t('Saved file as %filename (not accessible externally)',
-          [
-            '%filename' => $destination,
-            '@uri' => $destination,
-          ]
-        )
+        $this->t('Saved file as %filename (not accessible externally)', [
+          '%filename' => $destination,
+          '@uri' => $destination,
+        ])
       );
     }
-
   }
 
   /**
@@ -645,23 +607,18 @@ class FileExampleReadWriteForm extends FormBase {
         $this->setDefaultFile($sourcename);
         if ($url) {
           $this->messenger()->addMessage(
-           $this->t('The file was read and copied to %filename which is accessible at <a href=":url">this URL</a>',
-              [
-                '%filename' => $sourcename,
-                ':url' => $url->toString(),
-              ]
-            )
+            $this->t('The file was read and copied to %filename which is accessible at <a href=":url">this URL</a>', [
+              '%filename' => $sourcename,
+              ':url' => $url->toString(),
+            ])
           );
         }
         else {
           $this->messenger()->addMessage(
-           $this->t('The file was read and copied to %filename (not accessible externally)',
-              [
-                '%filename' => $sourcename,
-              ]
-            )
+            $this->t('The file was read and copied to %filename (not accessible externally)', [
+              '%filename' => $sourcename,
+            ])
           );
-
         }
       }
       else {
@@ -672,7 +629,6 @@ class FileExampleReadWriteForm extends FormBase {
       // We failed to get the contents of the requested file.
       $this->messenger()->addMessage($this->t('Failed to retrieve the file %file', ['%file' => $uri]));
     }
-
   }
 
   /**
@@ -704,12 +660,10 @@ class FileExampleReadWriteForm extends FormBase {
         $this->setDefaultFile($uri);
       }
       catch (\Exception $e) {
-        $this->messenger()->addMessage($this->t('Failed deleting managed file %uri. Result was %result',
-          [
-            '%uri' => $uri,
-            '%result' => print_r($e->getMessage(), TRUE),
-          ]
-        ), 'error');
+        $this->messenger()->addMessage($this->t('Failed deleting managed file %uri. Result was %result', [
+          '%uri' => $uri,
+          '%result' => print_r($e->getMessage(), TRUE),
+        ]), 'error');
       }
     }
     // Else use file_unmanaged_delete().
@@ -720,7 +674,7 @@ class FileExampleReadWriteForm extends FormBase {
       }
       else {
         $this->messenger()->addMessage($this->t('Successfully deleted unmanaged file %uri', ['%uri' => $uri]));
-        $this->setDefaultFile('file_example_default_file', $uri);
+        $this->setDefaultFile($uri);
       }
     }
   }
@@ -821,7 +775,7 @@ class FileExampleReadWriteForm extends FormBase {
       // @codingStandardsIgnoreEnd
     }
     else {
-      $this->messenger()->addMessage('<pre>' . print_r($this->getStoredData(), TRUE) . '</pre>');
+      $this->messenger()->addMessage(print_r($this->getStoredData(), TRUE));
     }
   }
 
@@ -862,21 +816,14 @@ class FileExampleReadWriteForm extends FormBase {
    * Get our stored data for display.
    */
   protected function getStoredData() {
-    $handle = $this->getSessionWrapper();
-    if ($handle) {
-      return $handle->getPath('');
-    }
-    return "SESSION STORE IS NOT ENABLED";
+    return $this->sessionHelper->getPath('');
   }
 
   /**
    * Reset our stored data.
    */
   protected function clearStoredData() {
-    $handle = $this->getSessionWrapper();
-    if ($handle) {
-      return $handle->cleanUpStore();
-    }
+    return $this->sessionHelper->cleanUpStore();
   }
 
 }

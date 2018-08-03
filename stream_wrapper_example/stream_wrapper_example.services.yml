@@ -29,6 +29,10 @@ services:
     tags:
       - { name: stream_wrapper, scheme: session }
 
+  stream_wrapper_example.session_helper:
+    class: Drupal\stream_wrapper_example\SessionHelper
+    arguments: ['@request_stack']
+
   path_processor.sessions:
     class: Drupal\stream_wrapper_example\PathProcessor\PathProcessorSessions
     tags:
