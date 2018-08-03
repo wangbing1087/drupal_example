@@ -5,7 +5,6 @@ namespace Drupal\stream_wrapper_example\StreamWrapper;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\Core\Routing\UrlGeneratorTrait;
-use Drupal\stream_wrapper_example\SessionHelper;
 
 /**
  * Example stream wrapper class to handle session:// streams.
@@ -81,11 +80,11 @@ class SessionStreamWrapper implements StreamWrapperInterface {
   use UrlGeneratorTrait;
 
   /**
-   * A representation of an HTTP request.
+   * The session helper service.
    *
-   * @var RequestStack
+   * @var \Drupal\stream_wrapper_example\SessionHelper
    */
-  protected $requestStack;
+  protected $sessionHelper;
 
   /**
    * Instance URI (stream).
@@ -159,17 +158,9 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     // passing arguments to the constructor, which we'd need to do in
     // order to use standard dependency injection as is typically done
     // in Drupal 8.
-    $this->requestStack = \Drupal::service('request_stack');
-    $helper = $this->getSessionHelper();
-    $helper->setPath('.isadir.txt', TRUE);
+    $this->sessionHelper = \Drupal::service('stream_wrapper_example.session_helper');
+    $this->sessionHelper->setPath('.isadir.txt', TRUE);
     $this->streamMode = FALSE;
-  }
-
-  /**
-   * Get wrapped session manipulators.
-   */
-  public function getSessionHelper() {
-    return new SessionHelper($this->requestStack);
   }
 
   /**
@@ -307,12 +298,11 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     // We will support two modes only, 'r' and 'w'.  If the key is 'r',
     // check to make sure the file is there.
     if (stristr($mode, 'r') !== FALSE) {
-      $helper = $this->getSessionHelper();
-      if (!$helper->checkPath($path)) {
+      if (!$this->sessionHelper->checkPath($path)) {
         return FALSE;
       }
       else {
-        $buffer = $helper->getPath($path);
+        $buffer = $this->sessionHelper->getPath($path);
         if (!is_string($buffer)) {
           return FALSE;
         }
@@ -574,9 +564,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     if ($this->streamMode == 'w') {
       // Since we aren't writing directly to the session, we need to send
       // the bytes on to the store.
-      $helper = $this->getSessionHelper();
       $path = $this->getLocalPath($this->uri);
-      $helper->setPath($path, $this->sessionContent);
+      $this->sessionHelper->setPath($path, $this->sessionContent);
       $this->sessionContent = '';
       $this->streamPointer = 0;
     }
@@ -644,8 +633,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    */
   public function unlink($uri) {
     $path = $this->getLocalPath($uri);
-    $helper = $this->getSessionHelper();
-    $helper->clearPath($path);
+    $this->sessionHelper->clearPath($path);
     return TRUE;
   }
 
@@ -667,19 +655,18 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     // to a new key, erase the old key.
     $from_path = $this->getLocalPath($from_uri);
     $to_path = $this->getLocalPath($to_uri);
-    $helper = $this->getSessionHelper();
-    if (!$helper->checkPath($from_path)) {
+    if (!$this->sessionHelper->checkPath($from_path)) {
       return FALSE;
     }
-    $from_key = $helper->getPath($from_path);
-    $path_info = $helper->getParentPath($to_path);
+    $from_key = $this->sessionHelper->getPath($from_path);
+    $path_info = $this->sessionHelper->getParentPath($to_path);
     $parent_path = $path_info['dirname'];
     $new_file = $path_info['basename'];
     // We will only allow writing to a non-existent file
     // in an existing directory.
-    if ($helper->checkPath($parent_path) && !$helper->checkPath($to_path)) {
-      $helper->setPath($to_path, $from_key);
-      $helper->clearPath($from_path);
+    if ($this->sessionHelper->checkPath($parent_path) && !$this->sessionHelper->checkPath($to_path)) {
+      $this->sessionHelper->setPath($to_path, $from_key);
+      $this->sessionHelper->clearPath($from_path);
       return TRUE;
     }
     return FALSE;
@@ -729,9 +716,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
       return FALSE;
     }
     $path = $this->getLocalPath($uri);
-    $helper = $this->getSessionHelper();
     $new_dir = ['isadir.txt' => TRUE];
-    $helper->setPath($path, $new_dir);
+    $this->sessionHelper->setPath($path, $new_dir);
     return TRUE;
   }
 
@@ -750,11 +736,10 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    */
   public function rmdir($uri, $options) {
     $path = $this->getLocalPath($uri);
-    $helper = $this->getSessionHelper();
-    if (!$helper->checkPath($path) or !is_array($helper->getPath($path))) {
+    if (!$this->sessionHelper->checkPath($path) or !is_array($this->sessionHelper->getPath($path))) {
       return FALSE;
     }
-    $helper->clearPath($path);
+    $this->sessionHelper->clearPath($path);
     return TRUE;
   }
 
@@ -782,8 +767,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
   public function url_stat($uri, $flags) {
 // @codingStandardsIgnoreEnd
     $path = $this->getLocalPath($uri);
-    $helper = $this->getSessionHelper();
-    if (!$helper->checkPath($path)) {
+    if (!$this->sessionHelper->checkPath($path)) {
       return FALSE;
       // No file.
     }
@@ -791,8 +775,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     $return = FALSE;
     $mode = 0;
 
-    $path_info = $helper->getParentPath($path);
-    $key = $helper->getPath($path);
+    $path_info = $this->sessionHelper->getParentPath($path);
+    $key = $this->sessionHelper->getPath($path);
     $key_name = $path_info['basename'];
     // We will call an array a directory and the root is always an array.
     if (is_array($key)) {
@@ -848,11 +832,10 @@ class SessionStreamWrapper implements StreamWrapperInterface {
   public function dir_opendir($uri, $options) {
 // @codingStandardsIgnoreEnd
     $path = $this->getLocalPath($uri);
-    $helper = $this->getSessionHelper();
-    if (!$helper->checkPath($path)) {
+    if (!$this->sessionHelper->checkPath($path)) {
       return FALSE;
     }
-    $var = $helper->getPath($path);
+    $var = $this->sessionHelper->getPath($path);
     if (!is_array($var)) {
       return FALSE;
     }
