@@ -33,18 +33,18 @@ class DbtngExampleRepository {
   /**
    * The database connection.
    *
-   * @var Drupal\Core\Database\Connection
+   * @var \Drupal\Core\Database\Connection
    */
   protected $connection;
 
   /**
    * Construct a repository object.
    *
-   * @param Connection $connection
+   * @param \Drupal\Core\Database\Connection $connection
    *   The database connection.
-   * @param TranslationInterface $translation
+   * @param \Drupal\Core\StringTranslation\TranslationInterface $translation
    *   The translation service.
-   * @param MessengerInterface $messenger
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
    */
   public function __construct(Connection $connection, TranslationInterface $translation, MessengerInterface $messenger) {

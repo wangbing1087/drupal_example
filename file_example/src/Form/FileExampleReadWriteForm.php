@@ -86,6 +86,10 @@ class FileExampleReadWriteForm extends FormBase {
    *   extensions.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   Access to the current request, including to session objects.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager.
+   * @param \Drupal\stream_wrapper_example\SessionHelper $session_helper
+   *   Session helper.
    */
   public function __construct(
     StateInterface $state,
