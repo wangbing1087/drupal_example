@@ -196,10 +196,6 @@ class FileExampleReadWriteForm extends FormBase {
    *
    * @return \Drupal\file\Entity\FileInterface|bool
    *   A file object that matches the URI, or FALSE if not a managed file.
-   *
-   * @todo This should still work. An entity query could be used instead.
-   *   May be other alternatives.
-   *   https://www.drupal.org/project/examples/issues/2986438
    */
   protected function getManagedFile($uri) {
     // We'll use an entity query to get the managed part of the file.
