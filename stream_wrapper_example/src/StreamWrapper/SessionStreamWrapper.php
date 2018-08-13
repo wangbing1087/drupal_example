@@ -152,12 +152,10 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    * do not know how to supply them.
    */
   public function __construct() {
-    // Dependency injection will not work here, since stream wrappers
-    // are not loaded the normal way: PHP creates them automatically
-    // when certain file functions are called.  This prevents us from
-    // passing arguments to the constructor, which we'd need to do in
-    // order to use standard dependency injection as is typically done
-    // in Drupal 8.
+    // Dependency injection will not work here, since PHP doesn't give us a
+    // chance to perform the injection. PHP creates the stream wrapper objects
+    // automatically when certain file functions are called. Therefore we'll use
+    // the \Drupal service locator.
     $this->sessionHelper = \Drupal::service('stream_wrapper_example.session_helper');
     $this->sessionHelper->setPath('.isadir.txt', TRUE);
     $this->streamMode = FALSE;
@@ -170,7 +168,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   The stream wrapper name.
    */
   public function getName() {
-    return t('File Example Session files');
+    return t('Session stream wrapper example files');
   }
 
   /**
@@ -195,43 +193,13 @@ class SessionStreamWrapper implements StreamWrapperInterface {
   }
 
   /**
-   * Implements getTarget().
-   *
-   * The "target" is the portion of the URI to the right of the scheme.
-   * So in session://example/test.txt, the target is 'example/test.txt'.
-   *
-   * @todo Figure out what this is in the new API.
-   *   https://www.drupal.org/project/examples/issues/2986437
-   */
-  public function getTarget($uri = NULL) {
-    if (!isset($uri)) {
-      $uri = $this->uri;
-    }
-
-    list($scheme, $target) = explode('://', $uri, 2);
-
-    // Remove erroneous leading or trailing, forward-slashes and backslashes.
-    // In the session:// scheme, there is never a leading slash on the target.
-    return trim($target, '\/');
-  }
-
-  /**
-   * Implements getDirectoryPath().
-   *
-   * In this case there is no directory string, so return an empty string.
-   */
-  public function getDirectoryPath() {
-    return '';
-  }
-
-  /**
    * Overrides getExternalUrl().
    *
    * We have set up a helper function and menu entry to provide access to this
    * key via HTTP; normally it would be accessible some other way.
    */
   public function getExternalUrl() {
-    $path = str_replace('\\', '/', $this->getTarget());
+    $path = str_replace('\\', '/', $this->getLocalPath());
     return $this->url('stream_wrapper_example.files.session', ['filepath' => $path, 'scheme' => 'session'], ['absolute' => TRUE]);
   }
 
@@ -430,8 +398,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   TRUE on success, FALSE otherwise.
    *
    * @todo
-   *   This one actually makes sense for the example.
-   *   https://www.drupal.org/project/examples/issues/2986437
+   *   Allow truncating the stream.
+   *   https://www.drupal.org/project/examples/issues/2992398
    */
 // @codingStandardsIgnoreStart
   public function stream_truncate($new_size) {
@@ -685,7 +653,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    */
   public function dirname($uri = NULL) {
     list($scheme, $target) = explode('://', $uri, 2);
-    $target = $this->getTarget($uri);
+    $target = $this->getLocalPath($uri);
     if (strpos($target, '/')) {
       $dirname = preg_replace('@/[^/]*$@', '', $target);
     }
