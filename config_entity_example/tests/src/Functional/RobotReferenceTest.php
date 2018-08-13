@@ -31,7 +31,6 @@ class RobotReferenceTest extends BrowserTestBase {
    */
   protected $profile = 'minimal';
 
-
   /**
    * Ensure we can use robot entities as reference fields.
    */
@@ -69,7 +68,7 @@ class RobotReferenceTest extends BrowserTestBase {
 
     // - Create a content entity containing the created reference field. Select
     //   "Marvin, the paranoid android".
-    // - Click save
+    // - Click save.
     $robot = Robot::loadMultiple();
     /* @var $robot \Drupal\config_entity_example\Entity\Robot */
     $robot = reset($robot);

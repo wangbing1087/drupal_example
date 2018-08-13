@@ -54,9 +54,9 @@ function examples_toolbar() {
     'js_example' => 'js_example.info',
     'menu_example' => 'examples.menu_example',
     'node_type_example' => 'config_node_type_example.description',
-    'page_example' => 'page_example_description',
+    'page_example' => 'page_example.description',
     'pager_example' => 'pager_example.page',
-    'phpunit_example' => 'phpunit_example_description',
+    'phpunit_example' => 'phpunit_example.description',
     'plugin_type_example' => 'plugin_type_example.description',
     'render_example' => 'render_example.description',
     'session_example' => 'session_example.form',
@@ -65,8 +65,8 @@ function examples_toolbar() {
     'stream_wrapper_example' => 'stream_wrapper_example.description',
     'testing_example' => 'testing_example.description',
     'queue_example' => 'queue_example',
-    'tablesort_example' => 'tablesort_example_description',
-    'tour_example' => 'tour_example_description',
+    'tablesort_example' => 'tablesort_example.description',
+    'tour_example' => 'tour_example.description',
   ];
 
   // Build a list of links for the menu.
