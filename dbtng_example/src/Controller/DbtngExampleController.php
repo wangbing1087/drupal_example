@@ -60,7 +60,7 @@ class DbtngExampleController extends ControllerBase {
 
     foreach ($entries = $this->repository->load() as $entry) {
       // Sanitize each entry.
-      $rows[] = array_map('Drupal\Component\Utility\SafeMarkup::checkPlain', (array) $entry);
+      $rows[] = array_map('Drupal\Component\Utility\Html::escape', (array) $entry);
     }
     $content['table'] = [
       '#type' => 'table',
@@ -95,7 +95,7 @@ class DbtngExampleController extends ControllerBase {
     $rows = [];
     foreach ($entries = $this->repository->advancedLoad() as $entry) {
       // Sanitize each entry.
-      $rows[] = array_map('Drupal\Component\Utility\SafeMarkup::checkPlain', $entry);
+      $rows[] = array_map('Drupal\Component\Utility\Html::escape', $entry);
     }
     $content['table'] = [
       '#type' => 'table',
