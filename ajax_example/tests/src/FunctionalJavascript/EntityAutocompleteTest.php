@@ -3,14 +3,14 @@
 namespace Drupal\Tests\ajax_example\FunctionalJavascript;
 
 use Drupal\Core\Url;
-use Drupal\FunctionalJavascriptTests\JavascriptTestBase;
+use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 
 /**
  * Tests the behavior of the entity_autocomplete example.
  *
  * @group ajax_example
  */
-class EntityAutocompleteTest extends JavascriptTestBase {
+class EntityAutocompleteTest extends WebDriverTestBase {
 
   /**
    * {@inheritdoc}
