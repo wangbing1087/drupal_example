@@ -65,7 +65,7 @@ class EntityAutocompleteTest extends WebDriverTestBase {
     }
 
     // Submit to see if our form processed the user properly.
-    $this->submitForm([$users_field_id => 'bb, bc'], 'Submit');
+    $this->drupalPostForm(NULL, [$users_field_id => 'bb, bc'], 'Submit');
     $assert->pageTextContains('These are your users: bb bc');
   }
 
