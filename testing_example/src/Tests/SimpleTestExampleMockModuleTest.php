@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\simpletest_example\Tests;
+namespace Drupal\testing_example\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
@@ -16,17 +16,17 @@ use Drupal\simpletest\WebTestBase;
  * exercise the code in question.
  *
  * This test case class is very similar to SimpleTestExampleTestCase. The main
- * difference is that we enable the simpletest_example_test module by providing
+ * difference is that we enable the testing_example_test module by providing
  * it in the $modules property. Then we can test for behaviors provided by that
  * module.
  *
  * @see SimpleTestExampleTestCase
  *
- * @ingroup simpletest_example
+ * @ingroup testing_example
  *
  * SimpleTest uses group annotations to help you organize your tests.
  *
- * @group simpletest_example
+ * @group testing_example
  * @group examples
  */
 class SimpleTestExampleMockModuleTest extends WebTestBase {
@@ -40,8 +40,8 @@ class SimpleTestExampleMockModuleTest extends WebTestBase {
    * @var array
    */
   static public $modules = [
-    'simpletest_example',
-    'simpletest_example_test',
+    'testing_example',
+    'testing_example_test',
   ];
 
   /**
@@ -57,7 +57,7 @@ class SimpleTestExampleMockModuleTest extends WebTestBase {
     $this->drupalLogin($test_user);
     // Set up some content.
     $settings = [
-      'type' => 'simpletest_example',
+      'type' => 'testing_example',
       'title' => $this->randomMachineName(32),
     ];
     // Create the content node.

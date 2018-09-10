@@ -3,9 +3,9 @@ status: true
 dependencies:
   enforced:
     module:
-      - simpletest_example
-name: 'SimpleTest Example Node Type'
-type: simpletest_example
+      - testing_example
+name: 'Testing Example Node Type'
+type: testing_example
 description: 'A content type that exists so we can test it.'
 help: ''
 new_revision: false

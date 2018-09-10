@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.simpletest_example.body
-    - node.type.simpletest_example
+    - field.field.node.testing_example.body
+    - node.type.testing_example
   module:
     - path
     - text
   enforced:
     module:
-      - simpletest_example
-id: node.simpletest_example.default
+      - testing_example
+id: node.testing_example.default
 targetEntityType: node
-bundle: simpletest_example
+bundle: testing_example
 mode: default
 content:
   title:

@@ -3,16 +3,16 @@ status: true
 dependencies:
   config:
     - field.storage.node.body
-    - node.type.simpletest_example
+    - node.type.testing_example
   module:
     - text
   enforced:
     module:
-      - simpletest_example
-id: node.simpletest_example.body
+      - testing_example
+id: node.testing_example.body
 field_name: body
 entity_type: node
-bundle: simpletest_example
+bundle: testing_example
 label: Body
 description: ''
 required: false
