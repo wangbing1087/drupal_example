@@ -61,6 +61,7 @@ class CacheExampleForm extends FormBase {
     $this->setStringTranslation($translation);
     $this->currentUser = $current_user;
     $this->cacheBackend = $cache_backend;
+    $this->dateFormatter = $date_formatter;
   }
 
   /**
