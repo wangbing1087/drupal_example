@@ -39,7 +39,7 @@ class SimpleTestExampleTest extends WebTestBase {
    *
    * @var array
    */
-  static public $modules = ['testing_example'];
+  public static $modules = ['testing_example'];
 
   /**
    * The installation profile to use with this test.
