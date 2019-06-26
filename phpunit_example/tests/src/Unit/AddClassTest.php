@@ -95,7 +95,7 @@ class AddClassTest extends UnitTestCase {
    * This method is similar to testAddWithDataProvider(), but the data
    * provider gives us data that should throw an exception.
    *
-   * This test uses the expectException() method to tell PHPUnit that
+   * This test uses the setExpectedException() method to tell PHPUnit that
    * a thrown exception should pass the test. You specify a
    * fully-qualified exception class name. If you specify \Exception, PHPUnit
    * will pass any exception, whereas a more specific subclass of \Exception
@@ -103,7 +103,7 @@ class AddClassTest extends UnitTestCase {
    *
    * Alternately, you can use try and catch blocks with assertions in order
    * to test exceptions. We won't demonstrate that here; it's a much better
-   * idea to test your exceptions with expectException().
+   * idea to test your exceptions with setExpectedException().
    *
    * @dataProvider addBadDataProvider
    *
@@ -111,7 +111,7 @@ class AddClassTest extends UnitTestCase {
    */
   public function testAddWithBadDataProvider($a, $b) {
     $sut = new AddClass();
-    $this->expectException(\InvalidArgumentException::class);
+    $this->setExpectedException(\InvalidArgumentException::class);
     $sut->add($a, $b);
   }
 

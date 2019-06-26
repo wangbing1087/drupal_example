@@ -110,7 +110,7 @@ class ProtectedPrivatesTest extends UnitTestCase {
     $pp = new ProtectedPrivates();
     // Use the reflection to invoke on the object.
     // This should throw an exception.
-    $this->expectException(\InvalidArgumentException::class);
+    $this->setExpectedException(\InvalidArgumentException::class);
     $private_method->invokeArgs($pp, [$a, $b]);
   }
 
@@ -140,7 +140,7 @@ class ProtectedPrivatesTest extends UnitTestCase {
    */
   public function testProtectedAddBadData($a, $b) {
     $stub = new ProtectedPrivatesSubclass();
-    $this->expectException(\InvalidArgumentException::class);
+    $this->setExpectedException(\InvalidArgumentException::class);
     $stub->subclassProtectedAdd($a, $b);
   }
 
