@@ -344,6 +344,10 @@ function dbtng_example_help($path) {
     case 'examples/dbtng/add':
       $output = t('Add an entry to the dbtng_example table.');
       break;
+
+    case 'examples/dbtng/grouping_list':
+      $output = t('Groups the result set by the specified field and render a list of entries in the database. e.g The records will be displayed in grouping format for column "name" and COUNT("name") is used as aggregate function');
+      break;
   }
   return $output;
 }
@@ -385,6 +389,12 @@ function dbtng_example_menu() {
   $items['examples/dbtng/advanced'] = array(
     'title' => 'Advanced list',
     'page callback' => 'dbtng_example_advanced_list',
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['examples/dbtng/grouping_list'] = array(
+    'title' => 'Grouping list',
+    'page callback' => 'dbtng_example_grouping_list',
     'access callback' => TRUE,
     'type' => MENU_LOCAL_TASK,
   );
@@ -573,6 +583,56 @@ function dbtng_example_form_update_submit($form, &$form_state) {
   $count = dbtng_example_entry_update($entry);
   drupal_set_message(t("Updated entry @entry (@count row updated)",
     array('@count' => $count, '@entry' => print_r($entry, TRUE))));
+}
+
+/**
+ * This function groups the result set by the specified field and render a
+ * list of entries in the database
+ */
+function dbtng_example_grouping_list() {
+  $result = dbtng_example_execute_group_by_select_query();
+  return dbtng_example_render_resultset_as_table($result);
+}
+
+/**
+ * The code below will result in the following query
+ * SELECT ex.pid AS pid, ex.uid AS uid, ex.name AS name, ex.surname AS surname,
+ * ex.age AS age FROM {dbtng_example} ex GROUP BY ex.age
+ */
+function dbtng_example_execute_group_by_select_query() {
+
+  $select = db_select('dbtng_example', 'ex');
+   // Select these specific fields for the output.
+  $select->fields('ex', array('name'));
+  // Count('name') how many times same name comes in table .
+  $select->addExpression('COUNT(ex.name)', 'count');
+  // 'n.name' is used for groupBy clause.
+  $select->groupBy("ex.name");
+  $output = $select->execute()->fetchAll();
+  return $output;
+}
+
+/**
+ * This function renders a resultset as table
+ */
+function dbtng_example_render_resultset_as_table($result) {
+  $rows = array();
+  if ($result) {
+    foreach ($result as $row) {
+      // Sanitize the data before handing it off to the theme layer.
+      $rows[] = array_map('check_plain', (array) $row);
+    }
+  }
+  return dbtng_example_convert_resultset_to_table_render_array($rows);
+}
+
+/**
+ * This function renders array for table 'dbtng_example'
+ */
+function dbtng_example_convert_resultset_to_table_render_array($rows = array()) {
+  $header = array(t('Name'), t('Count'));
+  $output = theme('table', array('header' => $header, 'rows' => $rows, 'empty' => t('No records found')));
+  return $output;
 }
 /**
  * @} End of "defgroup dbtng_example".
