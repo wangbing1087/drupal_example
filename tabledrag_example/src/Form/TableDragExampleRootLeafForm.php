@@ -237,7 +237,7 @@ class TableDragExampleRootLeafForm extends FormBase {
    *   Current form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $db_connection = \Drupal::database();
+    $db_connection = $this->database;
     // Because the form elements were keyed with the item ids from the database,
     // we can simply iterate through the submitted values.
     $submissions = $form_state->getValue('table-row');
@@ -267,7 +267,7 @@ class TableDragExampleRootLeafForm extends FormBase {
    *   An associative array storing our ordered tree structure.
    */
   public function getData() {
-    $db_connection = \Drupal::database();
+    $db_connection = $this->database;
     // Get all 'root node' items (items with no parents), sorted by weight.
     $root_items = $db_connection->select('tabledrag_example', 't')
       ->fields('t')
@@ -302,7 +302,7 @@ class TableDragExampleRootLeafForm extends FormBase {
    *   The depth of the item.
    */
   public function getTree($item, array &$tree = [], &$depth = 0) {
-    $db_connection = \Drupal::database();
+    $db_connection = $this->database;
     // Increase our $depth value by one.
     $depth++;
 
