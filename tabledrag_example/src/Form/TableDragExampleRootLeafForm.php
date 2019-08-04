@@ -6,6 +6,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Render\RendererInterface;
 
 /**
  * Table drag example root leaf form.
@@ -27,10 +28,20 @@ class TableDragExampleRootLeafForm extends FormBase {
   protected $database;
 
   /**
+   * The render service
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $render;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('database'));
+    return new static(
+      $container->get('database'),
+      $container->get('renderer')
+    );
   }
 
   /**
@@ -39,8 +50,9 @@ class TableDragExampleRootLeafForm extends FormBase {
    * @param Drupal\Core\Database\Connection $database
    *   The database.
    */
-  public function __construct(Connection $database) {
+  public function __construct(Connection $database, RendererInterface $render) {
     $this->database = $database;
+    $this->render = $render;
   }
 
   /**
@@ -116,7 +128,7 @@ class TableDragExampleRootLeafForm extends FormBase {
     // the respective table row, which are render elements on their own. For
     // single output elements, use the table cell itself for the render element.
     // If a cell should contain multiple elements, simply use nested sub-keys to
-    // build the render element structure for drupal_render() as you would
+    // build the render element structure for the renderer service as you would
     // everywhere else.
     $results = self::getData();
     foreach ($results as $row) {
@@ -153,7 +165,7 @@ class TableDragExampleRootLeafForm extends FormBase {
       // Some table columns containing raw markup.
       $form['table-row'][$row->id]['name'] = [
         '#markup' => $row->name,
-        '#prefix' => !empty($indentation) ? drupal_render($indentation) : '',
+        '#prefix' => !empty($indentation) ? $this->render->render($indentation) : '',
       ];
 
       $form['table-row'][$row->id]['description'] = [
