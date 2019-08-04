@@ -99,5 +99,5 @@ function tabledrag_example_install() {
  * @ingroup tabledrag_example
  */
 function tabledrag_example_uninstall() {
-  db_drop_table('tabledrag_example');
+  \Drupal::database()->schema()->dropTable('tabledrag_example');
 }
