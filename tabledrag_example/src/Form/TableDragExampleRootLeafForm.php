@@ -237,12 +237,11 @@ class TableDragExampleRootLeafForm extends FormBase {
    *   Current form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $db_connection = $this->database;
     // Because the form elements were keyed with the item ids from the database,
     // we can simply iterate through the submitted values.
     $submissions = $form_state->getValue('table-row');
     foreach ($submissions as $id => $item) {
-      $db_connection->update('tabledrag_example')
+      $this->database->update('tabledrag_example')
         ->fields([
           'weight' => $item['weight'],
           'pid' => $item['pid'],
@@ -267,9 +266,8 @@ class TableDragExampleRootLeafForm extends FormBase {
    *   An associative array storing our ordered tree structure.
    */
   public function getData() {
-    $db_connection = $this->database;
     // Get all 'root node' items (items with no parents), sorted by weight.
-    $root_items = $db_connection->select('tabledrag_example', 't')
+    $root_items = $this->database->select('tabledrag_example', 't')
       ->fields('t')
       ->condition('pid', '0', '=')
       ->orderBy('weight')
@@ -302,7 +300,6 @@ class TableDragExampleRootLeafForm extends FormBase {
    *   The depth of the item.
    */
   public function getTree($item, array &$tree = [], &$depth = 0) {
-    $db_connection = $this->database;
     // Increase our $depth value by one.
     $depth++;
 
@@ -314,7 +311,7 @@ class TableDragExampleRootLeafForm extends FormBase {
     $tree[$item->id] = $item;
 
     // Retrieve each of the children belonging to this nested demo.
-    $children = $db_connection->select('tabledrag_example', 't')
+    $children = $this->database->select('tabledrag_example', 't')
       ->fields('t')
       ->condition('pid', $item->id, '=')
       ->orderBy('weight')
