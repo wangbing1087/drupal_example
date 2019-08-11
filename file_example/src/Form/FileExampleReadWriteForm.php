@@ -194,7 +194,7 @@ class FileExampleReadWriteForm extends FormBase {
    * @param string $uri
    *   The URI of the file, like public://test.txt.
    *
-   * @return \Drupal\file\Entity\FileInterface|bool
+   * @return \Drupal\file\FileInterface|bool
    *   A file object that matches the URI, or FALSE if not a managed file.
    */
   protected function getManagedFile($uri) {
