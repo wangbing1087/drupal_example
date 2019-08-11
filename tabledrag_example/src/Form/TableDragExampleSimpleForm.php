@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class TableDragExampleSimpleForm extends FormBase {
 
   /**
-   * The database.
+   * The database connection.
    *
    * @var \Drupal\Core\Database\Connection
    */
@@ -31,8 +31,8 @@ class TableDragExampleSimpleForm extends FormBase {
   /**
    * Construct a form.
    *
-   * @param Drupal\Core\Database\Connection $database
-   *   The database.
+   * @param \Drupal\Core\Database\Connection $database
+   *   The database connection.
    */
   public function __construct(Connection $database) {
     $this->database = $database;

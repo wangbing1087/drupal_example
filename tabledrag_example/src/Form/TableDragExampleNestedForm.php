@@ -16,14 +16,14 @@ use Drupal\Core\Render\RendererInterface;
 class TableDragExampleNestedForm extends FormBase {
 
   /**
-   * The database.
+   * The database connection.
    *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
   /**
-   * The render service
+   * The renderer.
    *
    * @var \Drupal\Core\Render\RendererInterface
    */
@@ -42,8 +42,10 @@ class TableDragExampleNestedForm extends FormBase {
   /**
    * Construct a form.
    *
-   * @param Drupal\Core\Database\Connection $database
-   *   The database.
+   * @param \Drupal\Core\Database\Connection $database
+   *   The database connection.
+   * @param \Drupal\Core\Render\RendererInterface $render
+   *   The renderer.
    */
   public function __construct(Connection $database, RendererInterface $render) {
     $this->database = $database;
