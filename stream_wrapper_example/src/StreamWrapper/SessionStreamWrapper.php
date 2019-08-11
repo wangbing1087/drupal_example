@@ -4,7 +4,7 @@ namespace Drupal\stream_wrapper_example\StreamWrapper;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
-use Drupal\Core\Routing\UrlGeneratorTrait;
+use Drupal\Core\Url;
 
 /**
  * Example stream wrapper class to handle session:// streams.
@@ -74,11 +74,6 @@ use Drupal\Core\Routing\UrlGeneratorTrait;
  * @ingroup stream_wrapper_example
  */
 class SessionStreamWrapper implements StreamWrapperInterface {
-
-  // We use this trait in order to get nice system-style links
-  // for files stored via our stream wrapper.
-  use UrlGeneratorTrait;
-
   /**
    * The session helper service.
    *
@@ -150,6 +145,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * Note this cannot take any arguments; PHP's stream wrapper users
    * do not know how to supply them.
+   *
+   * @todo Refactor helper injection after https://www.drupal.org/node/3048126
    */
   public function __construct() {
     // Dependency injection will not work here, since PHP doesn't give us a
@@ -200,7 +197,11 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    */
   public function getExternalUrl() {
     $path = str_replace('\\', '/', $this->getLocalPath());
-    return $this->url('stream_wrapper_example.files.session', ['filepath' => $path, 'scheme' => 'session'], ['absolute' => TRUE]);
+    return Url::fromRoute('stream_wrapper_example.files.session', [
+      'filepath' => $path,
+      'scheme' => 'session',
+    ], ['absolute' => TRUE])
+      ->toString(FALSE);
   }
 
   /**
