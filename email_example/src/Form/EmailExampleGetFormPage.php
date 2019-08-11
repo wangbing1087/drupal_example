@@ -24,6 +24,13 @@ class EmailExampleGetFormPage extends FormBase {
   protected $mailManager;
 
   /**
+   * The email validator.
+   *
+   * @var \Drupal\Component\Utility\EmailValidator
+   */
+  protected $emailValidator;
+
+  /**
    * The language manager.
    *
    * @var \Drupal\Core\Language\LanguageManagerInterface
