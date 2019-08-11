@@ -180,7 +180,7 @@ class FileExampleReadWriteForm extends FormBase {
    */
   protected function getManagedFile($uri) {
     // We'll use an entity query to get the managed part of the file.
-    $storage = $this->entityTypeManager->getStorage('file');
+    $storage = $this->fileStorage;
     $query = $storage->getQuery()
       ->condition('uri', $uri);
     $fid = $query->execute();
