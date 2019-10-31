@@ -42,7 +42,7 @@ class CronExampleTest extends ExamplesBrowserTestBase {
 
     // Pretend that cron has never been run (even though simpletest seems to
     // run it once...).
-    \Drupal::state()->set('cron_example.next_execution', 0);
+    $this->container->get('state')->set('cron_example.next_execution', 0);
     $this->drupalGet($cron_form);
 
     // Initial run should cause cron_example_cron() to fire.
