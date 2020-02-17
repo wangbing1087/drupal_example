@@ -80,7 +80,6 @@ class PluginTypeExampleController extends ControllerBase {
     // This requires us to know the ID of the plugin we want. This is set in the
     // annotation on the plugin class: see
     // \Drupal\plugin_type_example\Plugin\Sandwich\ExampleHamSandwich.
-    // phpcs:ignore
     $ham_sandwich_plugin_definition = $this->sandwichManager->getDefinition('meatball_sandwich');
 
     // To get an instance of a plugin, we call createInstance() on the plugin

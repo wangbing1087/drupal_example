@@ -687,17 +687,21 @@ class FileExampleReadWriteForm extends FormBase {
     $directory = $form_values['directory_name'];
 
     // The options passed to FileSystemInterface::prepareDirectory() are a
-    // bitmask, so we can specify either FILE_MODIFY_PERMISSIONS (set
-    // permissions on the directory), FILE_CREATE_DIRECTORY, or both together:
-    // FILE_MODIFY_PERMISSIONS | FILE_CREATE_DIRECTORY.
-    // FILE_MODIFY_PERMISSIONS will set the permissions of the directory by
-    // by default to 0755, or to the value of the variable
+    // bitmask, so we can specify
+    // either FileSystemInterface::MODIFY_PERMISSIONS
+    // (set permissions on the directory),
+    // FileSystemInterface::CREATE_DIRECTORY,
+    // or both together:
+    // FileSystemInterface::MODIFY_PERMISSIONS |
+    // FileSystemInterface::CREATE_DIRECTORY.
+    // FileSystemInterface::MODIFY_PERMISSIONS
+    // will set the permissions of the directory by default to 0755,
+    // or to the value of the variable
     // 'file_chmod_directory'.
-    if (!$this->fileSystem->prepareDirectory($directory, FILE_MODIFY_PERMISSIONS | FILE_CREATE_DIRECTORY)) {
+    if (!$this->fileSystem->prepareDirectory($directory, FileSystemInterface::MODIFY_PERMISSIONS | FileSystemInterface::CREATE_DIRECTORY)) {
       $this->messenger()->addMessage($this->t('Failed to create %directory.', ['%directory' => $directory]), 'error');
     }
     else {
-      $result = is_dir($directory);
       $this->messenger()->addMessage($this->t('Directory %directory is ready for use.', ['%directory' => $directory]));
       $this->setDefaultDirectory($directory);
     }
@@ -706,7 +710,7 @@ class FileExampleReadWriteForm extends FormBase {
   /**
    * Submit handler for directory deletion.
    *
-   * @see Drupal\Core\File\FileSystemInterface::deleteRecursive()
+   * @see \Drupal\Core\File\FileSystemInterface::deleteRecursive()
    */
   public function handleDirectoryDelete(array &$form, FormStateInterface $form_state) {
     $form_values = $form_state->getValues();
@@ -801,7 +805,7 @@ class FileExampleReadWriteForm extends FormBase {
    * Reset our stored data.
    */
   protected function clearStoredData() {
-    return $this->sessionHelper->cleanUpStore();
+    $this->sessionHelper->cleanUpStore();
   }
 
 }
