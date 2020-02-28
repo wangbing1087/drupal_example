@@ -53,6 +53,7 @@ function examples_toolbar() {
           'title' => Html::escape($info['name']),
           'url' => Url::fromRoute($route),
           'attributes' => [
+            'class' => [Html::getClass($module)],
             'title' => Html::escape($info['description']),
           ],
         ];
