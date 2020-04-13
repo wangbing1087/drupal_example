@@ -17,6 +17,11 @@ use Drupal\Tests\examples\Functional\ExamplesBrowserTestBase;
 class NodeTypeExampleTest extends ExamplesBrowserTestBase {
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Modules to enable.
    *
    * @var array
