@@ -163,7 +163,7 @@ class CacheExampleForm extends FormBase {
     ];
     $form['file_search']['remove_file_count'] = [
       '#type' => 'submit',
-      '#submit' => [[$this, 'expireFiles']],
+      '#submit' => ['::expireFiles'],
       '#value' => $this->t('Explicitly remove cached file count'),
     ];
 
@@ -205,7 +205,7 @@ class CacheExampleForm extends FormBase {
     $form['expiration_demo']['create_cache_item'] = [
       '#type' => 'submit',
       '#value' => $this->t('Create a cache item with this expiration'),
-      '#submit' => [[$this, 'createExpiringItem']],
+      '#submit' => ['::createExpiringItem'],
     ];
 
     $form['cache_clearing'] = [
@@ -227,7 +227,7 @@ class CacheExampleForm extends FormBase {
     $form['cache_clearing']['clear_expired'] = [
       '#type' => 'submit',
       '#value' => $this->t('Clear or expire cache'),
-      '#submit' => [[$this, 'cacheClearing']],
+      '#submit' => ['::cacheClearing'],
       '#access' => $this->currentUser->hasPermission('administer site configuration'),
     ];
 
