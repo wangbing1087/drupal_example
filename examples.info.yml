@@ -3,5 +3,6 @@ type: module
 description: 'Provides example code for you to learn from.'
 package: Example modules
 core: 8.x
+core_version_requirement: ^8 || ^9
 dependencies:
   - drupal:toolbar
