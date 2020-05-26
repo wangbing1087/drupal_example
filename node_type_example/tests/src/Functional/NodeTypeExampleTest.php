@@ -3,8 +3,10 @@
 namespace Drupal\Tests\node_type_example\Functional;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\node\Entity\NodeType;
 use Drupal\Tests\examples\Functional\ExamplesBrowserTestBase;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
+use Drupal\node\NodeTypeInterface;
 
 /**
  * Test that our content types are successfully created.
@@ -96,12 +98,12 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
     // Check for the locked status of our content types.
     // $nodeType will be of type Drupal\node\NodeTypeInterface.
     $node_type = NodeType::load('basic_content_type');
-    $this->assertTrue($node_type, 'basic_content_type exists.');
+    $this->assertInstanceOf(NodeTypeInterface::class, $node_type, 'basic_content_type exists.');
     if ($node_type) {
       $this->assertFalse($node_type->isLocked(), 'basic_content_type is not locked.');
     }
     $node_type = NodeType::load('locked_content_type');
-    $this->assertTrue($node_type, 'locked_content_type exists.');
+    $this->assertInstanceOf(NodeTypeInterface::class, $node_type, 'locked_content_type exists.');
     if ($node_type) {
       $this->assertEquals('locked_content_type', $node_type->isLocked());
     }
@@ -124,7 +126,7 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
 
     // Check that the node exists in the database.
     $node = $this->drupalGetNodeByTitle($edit['title[0][value]']);
-    $this->assertTrue($node, 'Node found in database.');
+    $this->assertInstanceOf(NodeInterface::class, $node, 'Node found in database.');
   }
 
   /**
