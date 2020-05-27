@@ -49,7 +49,7 @@ class SessionHelperTest extends UnitTestCase {
     // Check out root.
     $helper = new SessionHelper($this->requestStack);
     $root = $helper->getPath('');
-    $this->assertInternalType('array', $root);
+    $this->assertIsArray($root);
     $this->assertEmpty($root);
 
     // Add a top level file.

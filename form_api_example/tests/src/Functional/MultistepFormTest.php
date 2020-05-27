@@ -30,9 +30,9 @@ class MultistepFormTest extends BrowserTestBase {
     $this->drupalGet(Url::fromRoute('form_api_example.multistep_form'));
     $page = $this->getSession()->getPage();
     $h1 = $page->find('css', 'h1');
-    $this->assertContains('Multistep form', $h1->getText());
+    $this->assertStringContainsString('Multistep form', $h1->getText());
     $desc = $page->find('css', '#edit-description label');
-    $this->assertContains('page 1', $desc->getText());
+    $this->assertStringContainsString('page 1', $desc->getText());
     $this->submitForm([
       'first_name' => 'Bozo',
       'last_name' => 'Di Clown',
@@ -43,13 +43,13 @@ class MultistepFormTest extends BrowserTestBase {
     // Really new page?
     $page2 = $this->getSession()->getPage();
     $desc = $page2->find('css', '#edit-description label');
-    $this->assertContains('page 2', $desc->getText());
+    $this->assertStringContainsString('page 2', $desc->getText());
 
     // Try the back button.
     $this->submitForm([], 'Back');
     $page1 = $this->getSession()->getPage();
     $desc = $page1->find('css', '#edit-description label');
-    $this->assertContains('page 1', $desc->getText());
+    $this->assertStringContainsString('page 1', $desc->getText());
     // Is the form still filled out?
     $first_name = $page1->findField('first_name')->getValue();
     $this->assertEquals('Bozo', $first_name);
@@ -62,15 +62,15 @@ class MultistepFormTest extends BrowserTestBase {
     $this->click('#edit-next');
     $page2 = $this->getSession()->getPage();
     $desc = $page2->find('css', '#edit-description label');
-    $this->assertContains('page 2', $desc->getText());
+    $this->assertStringContainsString('page 2', $desc->getText());
     $this->submitForm(['color' => 'neon green'], 'Submit');
 
     // This should take us back to the first page with a status message.
     $messages = $this->getSession()->getPage()->find('css', 'ul.messages__list');
     $message_text = $messages->getHtml();
-    $this->assertContains('Bozo Di Clown', $message_text);
-    $this->assertContains('1980', $message_text);
-    $this->assertContains('neon green', $message_text);
+    $this->assertStringContainsString('Bozo Di Clown', $message_text);
+    $this->assertStringContainsString('1980', $message_text);
+    $this->assertStringContainsString('neon green', $message_text);
   }
 
 }
