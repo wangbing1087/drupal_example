@@ -2,8 +2,7 @@ name: Node Type Example
 description: Demonstrates implementing a node content type in a module.
 package: Example modules
 type: module
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 dependencies:
   - drupal:node
   - drupal:path

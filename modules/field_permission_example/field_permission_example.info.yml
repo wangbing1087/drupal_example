@@ -2,8 +2,7 @@ name: Field Permission Example
 type: module
 description: Demonstrates how to create a field and implement access control over it.
 package: Example modules
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 dependencies:
   - drupal:node
   - examples:examples

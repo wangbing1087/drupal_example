@@ -2,8 +2,7 @@ name: File Example
 type: module
 description: Demonstrates using the Drupal File API and stream wrappers.
 package: Example modules
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 dependencies:
   - drupal:file
   - examples:examples

@@ -1,8 +1,7 @@
 name: 'Session Example'
 type: module
-description: 'An example of how to use session in Drupal 8.'
+description: 'An example of how to use session'
 package: Example modules
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 dependencies:
   - examples:examples

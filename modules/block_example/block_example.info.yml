@@ -2,8 +2,7 @@ name: Block Example
 type: module
 description: Demonstrates how a module can define blocks.
 package: Example modules
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 dependencies:
   - drupal:block
   - drupal:node

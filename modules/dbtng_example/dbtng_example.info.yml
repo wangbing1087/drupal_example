@@ -2,8 +2,7 @@ name: DBTNG Example
 type: module
 description: 'Demonstrates how to use the database API: DBTNG.'
 package: Example modules
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 dependencies:
   - drupal:node
   - drupal:user
