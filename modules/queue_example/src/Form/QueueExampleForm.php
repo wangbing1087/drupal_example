@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\queue_example\Forms;
+namespace Drupal\queue_example\Form;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Queue\QueueGarbageCollectionInterface;
