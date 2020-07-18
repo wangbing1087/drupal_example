@@ -7,5 +7,5 @@ dependencies:
   - drupal:rest
   - drupal:basic_auth
   - drupal:hal
-  - views:views
+  - drupal:views
   - examples:examples
