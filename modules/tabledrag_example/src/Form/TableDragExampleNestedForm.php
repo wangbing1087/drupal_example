@@ -116,7 +116,7 @@ class TableDragExampleNestedForm extends FormBase {
     // If a cell should contain multiple elements, simply use nested sub-keys to
     // build the render element structure for the renderer service as you would
     // everywhere else.
-    $results = self::getData();
+    $results = $this->getData();
     foreach ($results as $row) {
       // TableDrag: Mark the table row as draggable.
       $form['table-row'][$row->id]['#attributes']['class'][] = 'draggable';

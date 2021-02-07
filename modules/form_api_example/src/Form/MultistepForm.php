@@ -28,7 +28,7 @@ class MultistepForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     if ($form_state->has('page_num') && $form_state->get('page_num') == 2) {
-      return self::fapiExamplePageTwo($form, $form_state);
+      return $this->fapiExamplePageTwo($form, $form_state);
     }
 
     $form_state->set('page_num', 1);
