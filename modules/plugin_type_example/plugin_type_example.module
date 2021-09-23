@@ -44,7 +44,7 @@
  * In plugin_type_example_sandwich_info_alter() we'll demonstrate how you can
  * alter a plugin definition using an alter hook.
  *
- * To see the plugins in action visit /examples/plugin_type_example. The output
+ * To see the plugins in action visit /examples/plugin-type-example. The output
  * is rendered in
  * Drupal\plugin_type_example\Controller\PluginTypeExampleController::description().
  * Read through that method to see how to make use of plugins using the
