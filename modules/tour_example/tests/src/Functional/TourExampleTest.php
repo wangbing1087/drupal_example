@@ -20,7 +20,7 @@ class TourExampleTest extends TourTestBasic {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stark';
+  protected mixed $defaultTheme = 'stark';
 
   /**
    * Modules to enable.
@@ -66,21 +66,26 @@ class TourExampleTest extends TourTestBasic {
     // Get all the tour elements. These are the IDs of each tour tip. See them
     // in config/install/tour.tour.tour-example.yml.
     $tip_ids = [
-      'introduction',
-      'first-item',
-      'second-item',
-      'third-item',
-      'fourth-item',
+      'introduction' => '',
+      'first-item' => '#tour-target-1',
+      'second-item' => '#tour-target-2',
+      'third-item' => '#tour-target-3',
+      'fourth-item' => '#tour-target-4',
     ];
 
-    // Ensure that we have the same number of tour tips that we expect.
-    $this->assertCount(count($tip_ids), $this->xpath("//ol[@id = \"tour\"]//li"));
+    // Ensure that we have the right number of buttons.
+    // First tip does not have accompanying button, so we have less buttons
+    // than tour items.
+    $this->assertCount(count($tip_ids) - 1, $this->xpath("//#button-container//.button"));
 
     // Ensure each item exists.
-    foreach ($tip_ids as $tip_id) {
+    foreach ($tip_ids as $tip_id => $tip_selector) {
+      if (!$tip_selector) {
+        continue;
+      }
       $this->assertNotEmpty(
-        $this->xpath("//ol[@id = \"tour\"]//li[contains(@class, \"tip-$tip_id\")]"),
-        "Tip id: $tip_id"
+        $this->xpath("//$tip_selector"),
+        "Tip id: $tip_id $tip_selector"
       );
     }
 
