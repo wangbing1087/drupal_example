@@ -489,7 +489,7 @@ class RenderExampleController extends ControllerBase implements TrustedCallbackI
     $build = [
       'lazy_builder_time' => [
         '#markup' => '<p>' . \Drupal::translation()->translate('The current time is @time', [
-          '@time' => \Drupal::service('date.formatter')->format(REQUEST_TIME, 'long'),
+          '@time' => \Drupal::service('date.formatter')->format(\Drupal::time()->getRequestTime(), 'long'),
         ]) . '</p>',
       ],
     ];
