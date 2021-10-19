@@ -32,6 +32,14 @@ class TourExampleTest extends TourTestBasic {
   protected $profile = 'minimal';
 
   /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    $this->defaultTheme = 'stark';
+    parent::setUp();
+  }
+
+  /**
    * Main test.
    *
    * Make sure the Tour Example link is on the front page. Make sure all the
