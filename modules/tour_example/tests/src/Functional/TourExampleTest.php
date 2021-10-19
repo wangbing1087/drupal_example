@@ -22,7 +22,7 @@ class TourExampleTest extends TourTestBasic {
    *
    * @var array
    */
-  public static $modules = ['tour_example'];
+  protected static $modules = ['tour_example'];
 
   /**
    * The installation profile to use with this test.
@@ -34,7 +34,7 @@ class TourExampleTest extends TourTestBasic {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp() : void {
     $this->defaultTheme = 'stark';
     parent::setUp();
   }
@@ -79,15 +79,14 @@ class TourExampleTest extends TourTestBasic {
     // Ensure that we have the right number of buttons.
     // First tip does not have accompanying button, so we have less buttons
     // than tour items.
-    $this->assertCount(count($tip_ids) - 1, $this->xpath("//#button-container//.button"));
+    $this->assertCount(count($tip_ids) - 1, $this->cssSelect('#button-container .button'));
 
     // Ensure each item exists.
     foreach ($tip_ids as $tip_id => $tip_selector) {
       if (!$tip_selector) {
         continue;
       }
-      $this->assertNotEmpty(
-        $this->xpath("//$tip_selector"),
+      $this->assertNotEmpty($this->cssSelect($tip_selector),
         "Tip id: $tip_id $tip_selector"
       );
     }
