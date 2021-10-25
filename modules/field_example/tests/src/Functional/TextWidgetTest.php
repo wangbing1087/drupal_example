@@ -48,7 +48,7 @@ class TextWidgetTest extends FieldExampleBrowserTestBase {
     ];
 
     // Create the content.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
 
     // Verify the value is shown when viewing this node.
@@ -87,14 +87,14 @@ class TextWidgetTest extends FieldExampleBrowserTestBase {
     ];
 
     // We want to add a 2nd item to the multivalue field, so hit "add another".
-    $this->drupalPostForm(NULL, $edit, 'Add another item');
+    $this->submitForm($edit, 'Add another item');
 
     $edit = [
       'field_' . $this->fieldName . '[1][value]' => '#ffffff',
     ];
 
     // Now we can fill in the second item in the multivalue field and save.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
 
     // Verify the value is shown when viewing this node.

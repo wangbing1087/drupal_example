@@ -64,7 +64,7 @@ class DynamicFormSectionsTest extends WebDriverTestBase {
       $this->drupalGet($dropdown_url);
       $question_type_dropdown->setValue($question_style);
       $assert->assertWaitOnAjaxRequest();
-      $this->drupalPostForm(NULL, ['question' => 'George Washington'], 'Submit your answer');
+      $this->submitForm(['question' => 'George Washington'], 'Submit your answer');
       $assert->pageTextContains('You got the right answer: George Washington');
     }
   }

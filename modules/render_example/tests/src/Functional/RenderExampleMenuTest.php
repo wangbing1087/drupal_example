@@ -68,7 +68,8 @@ class RenderExampleMenuTest extends BrowserTestBase {
       $this->drupalGet($path);
       $assertion->statusCodeEquals(200);
       foreach ($buttons as $button) {
-        $this->drupalPostForm($path, [], $button);
+        $this->drupalGet($path);
+        $this->submitForm([], $button);
         $assertion->statusCodeEquals(200);
       }
     }

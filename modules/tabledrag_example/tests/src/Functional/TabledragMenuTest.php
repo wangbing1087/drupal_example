@@ -79,7 +79,8 @@ class TabledragMenuTest extends BrowserTestBase {
     foreach ($pages as $route => $buttons) {
       $path = Url::fromRoute($route);
       foreach ($buttons as $button) {
-        $this->drupalPostForm($path, [], $button);
+        $this->drupalGet($path);
+        $this->submitForm([], $button);
         $assertion->statusCodeEquals(200);
       }
     }

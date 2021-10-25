@@ -93,7 +93,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
       $this->drupalGet($path);
       $assertion->statusCodeEquals(200);
       foreach ($buttons as $button) {
-        $this->drupalPostForm($path, [], $button);
+        $this->drupalGet($path);
+        $this->submitForm([], $button);
         $assertion->statusCodeEquals(200);
       }
     }
@@ -109,7 +110,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     $edit = [
       'temperature' => 'warm',
     ];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.ajax_color_demo'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.ajax_color_demo'));
+    $this->submitForm($edit, 'Submit');
     $assert->statusCodeEquals(200);
     $assert->pageTextContains('Value for Temperature: warm');
   }
@@ -124,7 +126,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     $edit = [
       'change' => '1',
     ];
-    $this->drupalPostForm($build_demo_url, $edit, 'Submit');
+    $this->drupalGet($build_demo_url);
+    $this->submitForm($edit, 'Submit');
 
     $assert->pageTextContains('1. __construct');
     $assert->pageTextContains('2. getFormId');
@@ -132,7 +135,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     $assert->pageTextContains('4. submitForm');
 
     // Ensure the 'submit rebuild' action performs the rebuild.
-    $this->drupalPostForm($build_demo_url, $edit, 'Submit Rebuild');
+    $this->drupalGet($build_demo_url);
+    $this->submitForm($edit, 'Submit Rebuild');
     $assert->pageTextContains('4. rebuildFormSubmit');
   }
 
@@ -150,7 +154,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
       'publisher' => 'me',
       'diet' => 'vegan',
     ];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.container_demo'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.container_demo'));
+    $this->submitForm($edit, 'Submit');
     $assert->pageTextContains('Value for name: Dave');
     $assert->pageTextContains('Value for pen_name: DMan');
     $assert->pageTextContains('Value for title: My Book');
@@ -189,7 +194,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
       'subject' => 'Form test',
       'weight' => '3',
     ];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.input_demo'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.input_demo'));
+    $this->submitForm($edit, 'Submit');
     $assert->statusCodeEquals(200);
 
     $assert->pageTextContains('Value for What standardized tests did you take?');
@@ -224,7 +230,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     $edit = [
       'title' => 'My Book',
     ];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.modal_form'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.modal_form'));
+    $this->submitForm($edit, 'Submit');
     $assert->pageTextContains('Submit handler: You specified a title of My Book.');
   }
 
@@ -236,7 +243,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
 
     // Post a title.
     $edit = ['title' => 'My Custom Title'];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.simple_form'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.simple_form'));
+    $this->submitForm($edit, 'Submit');
     $assert->pageTextContains('You specified a title of My Custom Title.');
   }
 
@@ -251,7 +259,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
       'needs_accommodation' => TRUE,
       'diet' => 'vegan',
     ];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.state_demo'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.state_demo'));
+    $this->submitForm($edit, 'Submit');
     $assert->pageTextContains('Dietary Restriction Requested: vegan');
   }
 
@@ -266,7 +275,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
       'name' => 'Dave',
       'publisher' => 'me',
     ];
-    $this->drupalPostForm(Url::fromRoute('form_api_example.container_demo'), $edit, 'Submit');
+    $this->drupalGet(Url::fromRoute('form_api_example.container_demo'));
+    $this->submitForm($edit, 'Submit');
     $assert->pageTextContains('Value for name: Dave');
     $assert->pageTextContains('Value for publisher: me');
   }
@@ -294,7 +304,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     // and click on 'Add one more' button.
     $edit = [];
     $edit['names_fieldset[name][0]'] = $name_one;
-    $this->drupalPostForm($ajax_addmore_url, $edit, 'Add one more');
+    $this->drupalGet($ajax_addmore_url);
+    $this->submitForm($edit, 'Add one more');
 
     // Verify field-2 gets added.
     // and value of field-1 should retained.
@@ -306,7 +317,7 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     // Enter the value in field-2
     // and click on 'Add one more' button.
     $edit['names_fieldset[name][1]'] = $name_two;
-    $this->drupalPostForm(NULL, $edit, 'Add one more');
+    $this->submitForm($edit, 'Add one more');
 
     // Verify field-3 gets added.
     // and value of field-1 and field-2 are retained.
@@ -316,13 +327,13 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
 
     // Click on "Remove one" button to test remove button works.
     // and value of field-1 and field-2 are retained.
-    $this->drupalPostForm(NULL, NULL, 'Remove one');
+    $this->submitForm([], 'Remove one');
     $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-0"]'), $name_one);
     $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-1"]'), $name_two);
     $this->assertEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-2"]'));
 
     // Submit the form and verify the results.
-    $this->drupalPostForm(NULL, NULL, 'Submit');
+    $this->submitForm([], 'Submit');
     $this->assertText('These people are coming to the picnic: ' . $name_one . ', ' . $name_two);
 
   }

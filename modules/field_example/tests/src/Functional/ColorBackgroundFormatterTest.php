@@ -45,7 +45,7 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
 
     // Verify color.
@@ -81,7 +81,7 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
     ];
 
     // Add another field value.
-    $this->drupalPostForm(NULL, $edit, 'Add another item');
+    $this->submitForm($edit, 'Add another item');
 
     // Set value for newly added item.
     $edit = [
@@ -89,7 +89,7 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
     ];
 
     // Submit the content creation form.
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
 
     // Verify color.

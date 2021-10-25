@@ -58,17 +58,11 @@ class RobotReferenceTest extends BrowserTestBase {
 
     // - Under "Reference" select "other".
     // - Choose a label and click continue.
-    $this->drupalPostForm(NULL, [
-      'new_storage_type' => 'entity_reference',
-      'field_name' => 'robot_reference',
-      'label' => 'robot_reference',
-    ], 'Save and continue');
+    $this->submitForm(['new_storage_type' => 'entity_reference', 'field_name' => 'robot_reference', 'label' => 'robot_reference'], 'Save and continue');
     $assert->statusCodeEquals(200);
 
     // - Under configuration select "robot".
-    $this->drupalPostForm(NULL, [
-      'settings[target_type]' => 'robot',
-    ], 'Save field settings');
+    $this->submitForm(['settings[target_type]' => 'robot'], 'Save field settings');
     $assert->statusCodeEquals(200);
 
     // - Create a content entity containing the created reference field. Select
@@ -77,10 +71,8 @@ class RobotReferenceTest extends BrowserTestBase {
     $robot = Robot::loadMultiple();
     /* @var $robot \Drupal\config_entity_example\Entity\Robot */
     $robot = reset($robot);
-    $this->drupalPostForm(Url::fromRoute('node.add', ['node_type' => $type->id()]), [
-      'title[0][value]' => 'title',
-      'field_robot_reference[0][target_id]' => $robot->label(),
-    ], 'Save');
+    $this->drupalGet(Url::fromRoute('node.add', ['node_type' => $type->id()]));
+    $this->submitForm(['title[0][value]' => 'title', 'field_robot_reference[0][target_id]' => $robot->label()], 'Save');
     $assert->statusCodeEquals(200);
     $assert->pageTextContains($robot->label());
   }

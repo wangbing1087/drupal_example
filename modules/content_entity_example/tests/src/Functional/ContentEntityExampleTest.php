@@ -75,7 +75,7 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
       'first_name[0][value]' => 'test first name',
       'role' => 'administrator',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Entity listed.
     $assert->linkExists('Edit');
@@ -96,7 +96,7 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
 
     // Confirm deletion.
     $assert->linkExists('Cancel');
-    $this->drupalPostForm(NULL, [], 'Delete');
+    $this->submitForm([], 'Delete');
 
     // Back to list, must be empty.
     $assert->pageTextNotContains('test name');
@@ -245,7 +245,7 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
       'field_name' => $field_name,
     ];
 
-    $this->drupalPostForm(NULL, $edit, 'Save and continue');
+    $this->submitForm($edit, 'Save and continue');
     $expected_path = $this->buildUrl('admin/structure/' . $entity_name . '_settings/fields/' . $entity_name . '.' . $entity_name . '.field_' . $field_name . '/storage');
 
     // Fetch url without query parameters.
@@ -279,7 +279,8 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
       'first_name[0][value]' => 'Admin First Name',
       'role' => 'administrator',
     ];
-    $this->drupalPostForm($add_url, $edit, 'Save');
+    $this->drupalGet($add_url);
+    $this->submitForm($edit, 'Save');
     $assert->statusCodeEquals(200);
     $assert->pageTextContains('Test Admin Name');
 
@@ -297,7 +298,8 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
       'first_name[0][value]' => 'Mortal First Name',
       'role' => 'user',
     ];
-    $this->drupalPostForm($add_url, $edit, 'Save');
+    $this->drupalGet($add_url);
+    $this->submitForm($edit, 'Save');
     $assert->statusCodeEquals(200);
     $assert->pageTextContains('Mere Mortal Name');
 

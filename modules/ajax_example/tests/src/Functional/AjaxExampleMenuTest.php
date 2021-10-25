@@ -78,7 +78,8 @@ class AjaxExampleMenuTest extends BrowserTestBase {
       $this->drupalGet($url);
       $assertion->statusCodeEquals(200);
       foreach ($buttons as $button) {
-        $this->drupalPostForm($url, [], $button);
+        $this->drupalGet($url);
+        $this->submitForm([], $button);
         $assertion->statusCodeEquals(200);
       }
     }

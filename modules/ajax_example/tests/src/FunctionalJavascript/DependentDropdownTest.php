@@ -70,7 +70,7 @@ class DependentDropdownTest extends WebDriverTestBase {
         $this->drupalGet($dropdown_url);
         $family_dropdown->setValue($family);
         $assert->assertWaitOnAjaxRequest();
-        $this->drupalPostForm(NULL, ['instrument_dropdown' => $instrument], 'Submit');
+        $this->submitForm(['instrument_dropdown' => $instrument], 'Submit');
         $assert->pageTextContains("Your values have been submitted. Instrument family: $family, Instrument: $instrument");
       }
     }

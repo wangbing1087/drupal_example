@@ -61,7 +61,8 @@ class EmailExampleTest extends ExamplesBrowserTestBase {
 
     // Verifiy email form is submitted.
     $edit = ['email' => 'example@example.com', 'message' => 'test'];
-    $this->drupalPostForm('examples/email-example', $edit, 'Submit');
+    $this->drupalGet('examples/email-example');
+    $this->submitForm($edit, 'Submit');
     $assert->statusCodeEquals(200);
 
     // Verifiy comfirmation page.

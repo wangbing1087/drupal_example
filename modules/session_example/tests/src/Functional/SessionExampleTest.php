@@ -68,7 +68,8 @@ class SessionExampleTest extends BrowserTestBase {
       $this->drupalGet($url);
       $assert->statusCodeEquals(200);
       foreach ($buttons as $button) {
-        $this->drupalPostForm($url, [], $button);
+        $this->drupalGet($url);
+        $this->submitForm([], $button);
         $assert->statusCodeEquals(200);
       }
     }
@@ -93,7 +94,8 @@ class SessionExampleTest extends BrowserTestBase {
     $assert->pageTextContains('No color');
 
     // Save an empty session submission.
-    $this->drupalPostForm(Url::fromRoute('session_example.form'), [], 'Save');
+    $this->drupalGet(Url::fromRoute('session_example.form'));
+    $this->submitForm([], 'Save');
     $assert->pageTextContains('The session has been saved successfully.');
 
     // Make sure an empty session submission still has no reported information.
@@ -109,7 +111,8 @@ class SessionExampleTest extends BrowserTestBase {
       'quest' => 'To seek the Grail',
       'color' => 'blue',
     ];
-    $this->drupalPostForm(Url::fromRoute('session_example.form'), $form_data, 'Save');
+    $this->drupalGet(Url::fromRoute('session_example.form'));
+    $this->submitForm($form_data, 'Save');
 
     // Check that the report shows our information.
     $this->clickLink('Check here');
@@ -118,7 +121,8 @@ class SessionExampleTest extends BrowserTestBase {
     }
 
     // Clear the session.
-    $this->drupalPostForm(Url::fromRoute('session_example.form'), [], 'Clear Session');
+    $this->drupalGet(Url::fromRoute('session_example.form'));
+    $this->submitForm([], 'Clear Session');
     $assert->pageTextContains('Session is cleared.');
 
     // Verify that the session information doesn't show Sir Lancelot (or anyone
@@ -141,7 +145,8 @@ class SessionExampleTest extends BrowserTestBase {
       'quest' => 'To seek the Grail',
       'color' => 'blue',
     ];
-    $this->drupalPostForm(Url::fromRoute('session_example.form'), $form_data, 'Save');
+    $this->drupalGet(Url::fromRoute('session_example.form'));
+    $this->submitForm($form_data, 'Save');
 
     // Check that the report shows our information.
     $this->clickLink('Check here');

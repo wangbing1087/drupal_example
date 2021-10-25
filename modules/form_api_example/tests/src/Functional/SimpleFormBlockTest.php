@@ -52,7 +52,7 @@ class SimpleFormBlockTest extends BrowserTestBase {
     // And that the form works.
     $edit = [];
     $edit['title'] = 'SimpleFormBlock title example';
-    $this->drupalPostForm(NULL, $edit, t('Submit'));
+    $this->submitForm($edit, t('Submit'));
     $assert->pageTextContains('You specified a title of SimpleFormBlock title example');
   }
 

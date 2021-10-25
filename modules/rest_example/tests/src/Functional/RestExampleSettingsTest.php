@@ -46,7 +46,8 @@ class RestExampleSettingsTest extends BrowserTestBase {
       'server_password' => $account->passRaw,
     ];
 
-    $this->drupalPostForm(base_path() . 'examples/rest-client-settings', $edit, t('Save configuration'));
+    $this->drupalGet(base_path() . 'examples/rest-client-settings');
+    $this->submitForm($edit, t('Save configuration'));
     $this->assertText('The configuration options have been saved.');
 
     $config_factory = \Drupal::configFactory();

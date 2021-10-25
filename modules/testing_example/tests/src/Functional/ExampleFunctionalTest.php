@@ -95,8 +95,8 @@ class ExampleFunctionalTest extends ExamplesBrowserTestBase {
       'body[0][value]' => 'Body of test node',
     ];
     // Tell Drupal to post our new content. We post to NULL for the URL which
-    // tells drupalPostForm() to use the current page.
-    $this->drupalPostForm(NULL, $edit, 'op');
+    // tells submitForm() to use the current page.
+    $this->submitForm($edit, 'op');
     // Check our expectations.
     $assert->statusCodeEquals(200);
     $assert->linkExists($nodeTitle);

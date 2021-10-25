@@ -79,7 +79,8 @@ class BlockExampleTest extends BrowserTestBase {
     $edit = [
       'settings[block_example_string_text]' => $this->randomMachineName(),
     ];
-    $this->drupalPostForm('/admin/structure/block/manage/' . $settings_configurable['id'], $edit, 'Save block');
+    $this->drupalGet('/admin/structure/block/manage/' . $settings_configurable['id']);
+    $this->submitForm($edit, 'Save block');
     $assert->statusCodeEquals(200);
 
     // Verify that new content is shown.

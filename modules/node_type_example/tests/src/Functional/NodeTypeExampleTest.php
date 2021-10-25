@@ -116,7 +116,8 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
     $edit = [];
     $edit['title[0][value]'] = $this->randomMachineName(8);
     $edit['body[0][value]'] = $this->randomMachineName(16);
-    $this->drupalPostForm('/node/add/basic_content_type', $edit, 'Save');
+    $this->drupalGet('/node/add/basic_content_type');
+    $this->submitForm($edit, 'Save');
 
     // Check that the Basic page has been created.
     $assert->pageTextContains((string) new FormattableMarkup('@post @title has been created.', [
@@ -149,13 +150,15 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
     $edit['body[0][value]'] = $body;
 
     // Create a basic_content_type content.
-    $this->drupalPostForm('/node/add/basic_content_type', $edit, 'Save');
+    $this->drupalGet('/node/add/basic_content_type');
+    $this->submitForm($edit, 'Save');
     // Verify all fields and data of created content is shown.
     $this->assertText($title);
     $this->assertText($body);
 
     // Create a locked_content_type content.
-    $this->drupalPostForm('/node/add/locked_content_type', $edit, 'Save');
+    $this->drupalGet('/node/add/locked_content_type');
+    $this->submitForm($edit, 'Save');
     // Verify all fields and data of created content is shown.
     $this->assertText($title);
     $this->assertText($body);

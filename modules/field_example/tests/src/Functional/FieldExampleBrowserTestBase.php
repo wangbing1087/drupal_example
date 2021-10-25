@@ -79,7 +79,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
       'name' => $this->contentTypeName,
       'type' => $this->contentTypeName,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and manage fields');
+    $this->submitForm($edit, 'Save and manage fields');
     $this->assertText((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
 
     // Reset the permission cache.
@@ -123,7 +123,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
       'field_name' => $field_name,
       'label' => $field_name,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save and continue');
+    $this->submitForm($edit, 'Save and continue');
 
     // Fill out the $cardinality form as if we're not using an unlimited number
     // of values.
@@ -141,7 +141,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
     }
 
     // And now we save the cardinality settings.
-    $this->drupalPostForm(NULL, $edit, 'Save field settings');
+    $this->submitForm($edit, 'Save field settings');
     $this->verbose(
       (string) new FormattableMarkup('Saved settings for field %field_name with widget %widget_type and cardinality %cardinality',
         [
@@ -158,14 +158,14 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
     $edit = [
       'fields[field_' . $field_name . '][type]' => $widget_type,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Set the field formatter for the newly created field.
     $this->drupalGet('admin/structure/types/manage/' . $this->contentTypeName . '/display');
     $edit1 = [
       'fields[field_' . $field_name . '][type]' => $fieldFormatter,
     ];
-    $this->drupalPostForm(NULL, $edit1, 'Save');
+    $this->submitForm($edit1, 'Save');
 
     return $field_name;
   }

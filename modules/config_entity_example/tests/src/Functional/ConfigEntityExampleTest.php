@@ -105,15 +105,7 @@ class ConfigEntityExampleTest extends BrowserTestBase {
     $this->drupalGet('/examples/config-entity-example');
     $this->clickLink('Add robot');
     $robot_machine_name = 'roboname';
-    $this->drupalPostForm(
-      NULL,
-      [
-        'label' => $robot_machine_name,
-        'id' => $robot_machine_name,
-        'floopy' => TRUE,
-      ],
-      'Create Robot'
-    );
+    $this->submitForm(['label' => $robot_machine_name, 'id' => $robot_machine_name, 'floopy' => TRUE], 'Create Robot');
 
     // 4) Verify that our robot appears when we edit it.
     $this->drupalGet('/examples/config-entity-example/manage/' . $robot_machine_name);
@@ -125,30 +117,15 @@ class ConfigEntityExampleTest extends BrowserTestBase {
     $this->clickLink('Add robot');
     $robby_machine_name = 'robby_machine_name';
     $robby_label = 'Robby label';
-    $this->drupalPostForm(
-      NULL,
-      [
-        'label' => $robby_label,
-        'id' => $robby_machine_name,
-        'floopy' => TRUE,
-      ],
-      'Create Robot'
-    );
+    $this->submitForm(['label' => $robby_label, 'id' => $robby_machine_name, 'floopy' => TRUE], 'Create Robot');
     $this->drupalGet('/examples/config-entity-example');
     $assert->pageTextContains($robby_label);
     $assert->pageTextContains($robby_machine_name);
 
     // Try to re-submit the same robot, and verify that we see an error message
     // and not a PHP error.
-    $this->drupalPostForm(
-      Url::fromRoute('entity.robot.add_form'),
-      [
-        'label' => $robby_label,
-        'id' => $robby_machine_name,
-        'floopy' => TRUE,
-      ],
-      'Create Robot'
-    );
+    $this->drupalGet(Url::fromRoute('entity.robot.add_form'));
+    $this->submitForm(['label' => $robby_label, 'id' => $robby_machine_name, 'floopy' => TRUE], 'Create Robot');
     $assert->pageTextContains('The machine-readable name is already in use.');
 
     // 6) Verify that required links are present on respective paths.
@@ -177,15 +154,8 @@ class ConfigEntityExampleTest extends BrowserTestBase {
 
     // Try to submit a robot with a machine name of 'custom'. This is a reserved
     // keyword we've disallowed in the form.
-    $this->drupalPostForm(
-      Url::fromRoute('entity.robot.add_form'),
-      [
-        'label' => 'Custom',
-        'id' => 'custom',
-        'floopy' => TRUE,
-      ],
-      'Create Robot'
-    );
+    $this->drupalGet(Url::fromRoute('entity.robot.add_form'));
+    $this->submitForm(['label' => 'Custom', 'id' => 'custom', 'floopy' => TRUE], 'Create Robot');
     $assert->pageTextContains('Additionally, it can not be the reserved word "custom".');
 
   }
