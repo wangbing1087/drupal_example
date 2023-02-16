@@ -260,7 +260,7 @@ class InputDemo extends FormBase {
     $form['image_button'] = [
       '#type' => 'image_button',
       '#value' => 'Image button',
-      '#src' => drupal_get_path('module', 'examples') . '/images/100x30.svg',
+      '#src' => \Drupal::service('extension.list.module')->getPath('examples') . '/images/100x30.svg',
       '#description' => $this->t('image file, #type = image_button'),
     ];
 
