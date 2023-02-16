@@ -49,7 +49,7 @@ class DynamicFormSectionsTest extends BrowserTestBase {
     $this->drupalGet($dropdown_url);
     $this->submitForm(['question_type_select' => 'Choose question style'], 'Choose');
     $detail_children = $page->findAll('css', 'div.details-wrapper *');
-    $this->assertEqual(count($detail_children), 0);
+    $this->assertEquals(count($detail_children), 0);
 
     // Cycle through the other dropdown values.
     $question_styles = [
@@ -62,7 +62,7 @@ class DynamicFormSectionsTest extends BrowserTestBase {
       $this->drupalGet($dropdown_url);
       $this->submitForm(['question_type_select' => $question_style], 'Choose');
       $detail_children = $page->findAll('css', 'div.details-wrapper *');
-      $this->assertNotEqual($this->count($detail_children), 0);
+      $this->assertNotEquals($this->count($detail_children), 0);
       $this->submitForm(['question' => 'George Washington'], 'Submit your answer');
       $assert->pageTextContains('You got the right answer: George Washington');
     }
@@ -70,7 +70,7 @@ class DynamicFormSectionsTest extends BrowserTestBase {
     $this->drupalGet($dropdown_url);
     $this->submitForm(['question_type_select' => 'Multiple Choice'], 'Choose');
     $detail_children = $page->findAll('css', 'div.details-wrapper *');
-    $this->assertNotEqual($this->count($detail_children), 0);
+    $this->assertNotEquals($this->count($detail_children), 0);
     $this->submitForm(['question' => 'Abraham Lincoln'], 'Submit your answer');
     $assert->pageTextContains('Sorry, your answer (Abraham Lincoln) is wrong');
   }

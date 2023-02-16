@@ -80,7 +80,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
       'type' => $this->contentTypeName,
     ];
     $this->submitForm($edit, 'Save and manage fields');
-    $this->assertText((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
+    $this->assertSession()->pageTextContains((string) new FormattableMarkup('The content type @name has been added.', ['@name' => $this->contentTypeName]));
 
     // Reset the permission cache.
     $create_permission = 'create ' . $this->contentTypeName . ' content';
@@ -142,7 +142,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
 
     // And now we save the cardinality settings.
     $this->submitForm($edit, 'Save field settings');
-    $this->verbose(
+    dump(
       (string) new FormattableMarkup('Saved settings for field %field_name with widget %widget_type and cardinality %cardinality',
         [
           '%field_name' => $field_name,

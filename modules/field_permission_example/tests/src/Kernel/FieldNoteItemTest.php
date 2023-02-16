@@ -144,13 +144,13 @@ class FieldNoteItemTest extends FieldKernelTestBase {
 
     $this->assertTrue($entity->field_fieldnote instanceof FieldItemListInterface, 'Field implements interface.');
     $this->assertTrue($entity->field_fieldnote[0] instanceof FieldItemInterface, 'Field item implements interface.');
-    $this->assertEqual($entity->field_fieldnote->value, $value);
-    $this->assertEqual($entity->field_fieldnote[0]->value, $value);
+    $this->assertEquals($entity->field_fieldnote->value, $value);
+    $this->assertEquals($entity->field_fieldnote[0]->value, $value);
 
     // Verify changing the field's value.
     $new_value = $this->randomMachineName();
     $entity->field_fieldnote->value = $new_value;
-    $this->assertEqual($entity->field_fieldnote->value, $new_value);
+    $this->assertEquals($entity->field_fieldnote->value, $new_value);
 
     // Read changed entity and assert changed values.
     $entity->save();
@@ -160,7 +160,7 @@ class FieldNoteItemTest extends FieldKernelTestBase {
         ->getStorage('entity_test')
         ->load($id);
 
-    $this->assertEqual($entity->field_fieldnote->value, $new_value);
+    $this->assertEquals($entity->field_fieldnote->value, $new_value);
 
     // Test sample item generation.
     $entity

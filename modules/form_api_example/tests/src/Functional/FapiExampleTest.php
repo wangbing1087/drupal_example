@@ -293,7 +293,7 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
 
     // Verify that anonymous can access the ajax_add_more page.
     $this->drupalGet($ajax_addmore_url);
-    $this->assertResponse(200);
+    $this->assertSession()->statusCodeEquals(200);
     // Verify that there is no remove button.
     $this->assertEmpty($this->xpath($button_xpath));
 
@@ -308,8 +308,8 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
     $this->submitForm($edit, 'Add one more');
 
     // Verify field-2 gets added.
-    // and value of field-1 should retained.
-    $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-0"]'), $name_one);
+    // and value of field-1 should be retained.
+    $this->assertEquals($name_one, $this->xpath('//input[@id = "edit-names-fieldset-name-0"]'));
     $this->assertNotEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-1"]'));
     // Verify that the remove button was added.
     $this->assertNotEmpty($this->xpath($button_xpath));
@@ -321,20 +321,20 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
 
     // Verify field-3 gets added.
     // and value of field-1 and field-2 are retained.
-    $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-0"]'), $name_one);
-    $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-1"]'), $name_two);
+    $this->assertEquals($name_one, $this->xpath('//input[@id = "edit-names-fieldset-name-0"]'));
+    $this->assertEquals($name_two, $this->xpath('//input[@id = "edit-names-fieldset-name-1"]'));
     $this->assertNotEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-2"]'));
 
     // Click on "Remove one" button to test remove button works.
     // and value of field-1 and field-2 are retained.
     $this->submitForm([], 'Remove one');
-    $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-0"]'), $name_one);
-    $this->assertFieldsByValue($this->xpath('//input[@id = "edit-names-fieldset-name-1"]'), $name_two);
+    $this->assertEquals($name_one, $this->xpath('//input[@id = "edit-names-fieldset-name-0"]'));
+    $this->assertEquals($name_two, $this->xpath('//input[@id = "edit-names-fieldset-name-1"]'));
     $this->assertEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-2"]'));
 
     // Submit the form and verify the results.
     $this->submitForm([], 'Submit');
-    $this->assertText('These people are coming to the picnic: ' . $name_one . ', ' . $name_two);
+    $this->assertSession()->pageTextContains('These people are coming to the picnic: ' . $name_one . ', ' . $name_two);
 
   }
 

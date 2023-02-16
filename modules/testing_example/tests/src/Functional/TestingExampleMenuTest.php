@@ -45,10 +45,10 @@ class TestingExampleMenuTest extends BrowserTestBase {
   public function testTestingNavigation() {
     foreach (['' => '/examples/testing-example'] as $page => $path) {
       $this->drupalGet($page);
-      $this->assertLinkByHref($path);
+      $this->assertSession()->linkByHrefExists($path);
     }
     $this->drupalGet('/examples/testing-example');
-    $this->assertResponse(200);
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }

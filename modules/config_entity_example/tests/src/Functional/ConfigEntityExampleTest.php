@@ -130,9 +130,9 @@ class ConfigEntityExampleTest extends BrowserTestBase {
 
     // 6) Verify that required links are present on respective paths.
     $this->drupalGet(Url::fromRoute('entity.robot.list'));
-    $this->assertLinkByHref('/examples/config-entity-example/add');
-    $this->assertLinkByHref('/examples/config-entity-example/manage/robby_machine_name');
-    $this->assertLinkByHref('/examples/config-entity-example/manage/robby_machine_name/delete');
+    $this->assertSession()->linkByHrefExists('/examples/config-entity-example/add');
+    $this->assertSession()->linkByHrefExists('/examples/config-entity-example/manage/robby_machine_name');
+    $this->assertSession()->linkByHrefExists('/examples/config-entity-example/manage/robby_machine_name/delete');
 
     // Verify links on Add Robot.
     $this->drupalGet('/examples/config-entity-example/add');
@@ -140,7 +140,7 @@ class ConfigEntityExampleTest extends BrowserTestBase {
 
     // Verify links on Edit Robot.
     $this->drupalGet('/examples/config-entity-example/manage/robby_machine_name');
-    $this->assertLinkByHref('/examples/config-entity-example/manage/robby_machine_name/delete');
+    $this->assertSession()->linkByHrefExists('/examples/config-entity-example/manage/robby_machine_name/delete');
     $this->assertActionButton('examples/config-entity-example');
 
     // Verify links on Delete Robot.
@@ -150,7 +150,7 @@ class ConfigEntityExampleTest extends BrowserTestBase {
       '//a[@id="edit-cancel" and contains(@href, :path)]',
       [':path' => '/examples/config-entity-example']
     );
-    $this->assertEqual(count($cancel_button), 1, 'Found cancel button linking to list page.');
+    $this->assertEquals(count($cancel_button), 1, 'Found cancel button linking to list page.');
 
     // Try to submit a robot with a machine name of 'custom'. This is a reserved
     // keyword we've disallowed in the form.
@@ -171,7 +171,7 @@ class ConfigEntityExampleTest extends BrowserTestBase {
       '//a[contains(@class, "button-action") and contains(@data-drupal-link-system-path, :path)]',
       [':path' => $path]
     );
-    $this->assertEqual(count($button_element), 1, 'Found action button for path: ' . $path);
+    $this->assertEquals(count($button_element), 1, 'Found action button for path: ' . $path);
   }
 
 }

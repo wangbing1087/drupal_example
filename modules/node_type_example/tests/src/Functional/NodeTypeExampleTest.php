@@ -153,15 +153,15 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
     $this->drupalGet('/node/add/basic_content_type');
     $this->submitForm($edit, 'Save');
     // Verify all fields and data of created content is shown.
-    $this->assertText($title);
-    $this->assertText($body);
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($body);
 
     // Create a locked_content_type content.
     $this->drupalGet('/node/add/locked_content_type');
     $this->submitForm($edit, 'Save');
     // Verify all fields and data of created content is shown.
-    $this->assertText($title);
-    $this->assertText($body);
+    $this->assertSession()->pageTextContains($title);
+    $this->assertSession()->pageTextContains($body);
   }
 
   /**

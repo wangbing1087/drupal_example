@@ -35,13 +35,13 @@ class BatchExampleWebTest extends BrowserTestBase {
     $this->drupalGet('examples/batch_example');
     $this->submitForm(['batch' => 'batch_1'], 'Go');
     // Check that 1000 operations were performed.
-    $this->assertText('1000 results processed');
+    $this->assertSession()->pageTextContains('1000 results processed');
 
     // Launch Batch 2.
     $this->drupalGet('examples/batch_example');
     $this->submitForm(['batch' => 'batch_2'], 'Go');
     // Check that 600 operations were performed.
-    $this->assertText('600 results processed');
+    $this->assertSession()->pageTextContains('600 results processed');
   }
 
 }
