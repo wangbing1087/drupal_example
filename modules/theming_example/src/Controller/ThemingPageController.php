@@ -29,23 +29,23 @@ class ThemingPageController {
     $links[] = [
       '#type' => 'link',
       '#url' => Url::fromRoute('theming_example.list'),
-      '#title' => t('Simple page with a list'),
+      '#title' => $this->t('Simple page with a list'),
     ];
     $links[] = [
       '#type' => 'link',
       '#url' => Url::fromRoute('theming_example.form_select'),
-      '#title' => t('Simple form 1'),
+      '#title' => $this->t('Simple form 1'),
     ];
     $links[] = [
       '#type' => 'link',
       '#url' => Url::fromRoute('theming_example.form_text'),
-      '#title' => t('Simple form 2'),
+      '#title' => $this->t('Simple form 2'),
     ];
     $content = [
       '#theme' => 'item_list',
       '#theme_wrappers' => ['theming_example_content_array'],
       '#items' => $links,
-      '#title' => t('Some examples of pages and forms that are run through theme functions.'),
+      '#title' => $this->t('Some examples of pages and forms that are run through theme functions.'),
     ];
 
     return $content;
