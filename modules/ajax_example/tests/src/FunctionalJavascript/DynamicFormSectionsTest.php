@@ -22,7 +22,7 @@ class DynamicFormSectionsTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['ajax_example'];
+  protected static $modules = ['ajax_example'];
 
   /**
    * Test the dependent dropdown form with AJAX.

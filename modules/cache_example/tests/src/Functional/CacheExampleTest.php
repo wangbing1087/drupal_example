@@ -24,7 +24,7 @@ class CacheExampleTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['cache_example'];
+  protected static $modules = ['cache_example'];
 
   /**
    * The installation profile to use with this test.

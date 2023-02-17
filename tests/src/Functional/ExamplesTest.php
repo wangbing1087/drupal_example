@@ -24,7 +24,7 @@ class ExamplesTest extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['examples', 'toolbar'];
+  protected static $modules = ['examples', 'toolbar'];
 
   /**
    * Verify that the toolbar tab and tray are showing and functioning.

@@ -38,7 +38,7 @@ class ExampleFixtureManagementTest extends KernelTestBase {
    *
    * @var string[]
    */
-  public static $modules = ['user', 'system', 'field', 'node', 'text', 'filter'];
+  protected static $modules = ['user', 'system', 'field', 'node', 'text', 'filter'];
 
   /**
    * An 'owner' user object.

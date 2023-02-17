@@ -27,7 +27,7 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['content_entity_example', 'block', 'field_ui'];
+  protected static $modules = ['content_entity_example', 'block', 'field_ui'];
 
   /**
    * Basic tests for Content Entity Example.

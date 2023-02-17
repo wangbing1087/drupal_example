@@ -27,7 +27,7 @@ class ExampleFunctionalTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['node', 'user'];
+  protected static $modules = ['node', 'user'];
 
   /**
    * Fixture user with administrative powers.

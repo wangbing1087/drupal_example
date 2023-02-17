@@ -23,7 +23,7 @@ class AjaxExampleMenuTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['ajax_example'];
+  protected static $modules = ['ajax_example'];
 
   /**
    * The installation profile to use with this test.

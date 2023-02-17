@@ -21,7 +21,7 @@ class BatchExampleWebTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['node', 'batch_example'];
+  protected static $modules = ['node', 'batch_example'];
 
   /**
    * Login user and test both batch examples.

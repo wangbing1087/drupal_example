@@ -21,7 +21,7 @@ class ActionExampleTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['action_example'];
+  protected static $modules = ['action_example'];
 
   /**
    * The installation profile to use with this test.

@@ -24,7 +24,7 @@ class BlockExampleMenuTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['block', 'block_example'];
+  protected static $modules = ['block', 'block_example'];
 
   /**
    * The installation profile to use with this test.

@@ -25,7 +25,7 @@ class DynamicFormSectionsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['ajax_example'];
+  protected static $modules = ['ajax_example'];
 
   /**
    * Test the dynamic sections form without AJAX.

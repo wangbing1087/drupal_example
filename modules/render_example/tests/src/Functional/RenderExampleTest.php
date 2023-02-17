@@ -23,7 +23,7 @@ class RenderExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['render_example'];
+  protected static $modules = ['render_example'];
 
   /**
    * {@inheritdoc}

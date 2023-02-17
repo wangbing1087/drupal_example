@@ -27,7 +27,7 @@ class TestingExampleMenuTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['testing_example'];
+  protected static $modules = ['testing_example'];
 
   /**
    * The installation profile to use with this test.

@@ -25,7 +25,7 @@ class PluginTypeExampleTest extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['plugin_type_example'];
+  protected static $modules = ['plugin_type_example'];
 
   /**
    * The installation profile to use with this test.

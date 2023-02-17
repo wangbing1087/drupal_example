@@ -20,7 +20,7 @@ class AutotextfieldsTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['ajax_example'];
+  protected static $modules = ['ajax_example'];
 
   /**
    * Test the user interactions for the Autotextfields example.

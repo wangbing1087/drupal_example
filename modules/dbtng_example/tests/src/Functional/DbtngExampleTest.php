@@ -24,7 +24,7 @@ class DbtngExampleTest extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['dbtng_example'];
+  protected static $modules = ['dbtng_example'];
 
   /**
    * The installation profile to use with this test.

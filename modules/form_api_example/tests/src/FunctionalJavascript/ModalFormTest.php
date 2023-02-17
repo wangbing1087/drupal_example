@@ -22,7 +22,7 @@ class ModalFormTest extends WebDriverTestBase {
    *
    * @var string[]
    */
-  public static $modules = ['form_api_example'];
+  protected static $modules = ['form_api_example'];
 
   /**
    * Functional test of the modal form example.

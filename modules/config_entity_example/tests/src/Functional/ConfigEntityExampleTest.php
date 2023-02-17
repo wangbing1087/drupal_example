@@ -26,7 +26,7 @@ class ConfigEntityExampleTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['config_entity_example'];
+  protected static $modules = ['config_entity_example'];
 
   /**
    * The installation profile to use with this test.

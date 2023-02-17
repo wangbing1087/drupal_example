@@ -28,7 +28,7 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['node', 'node_type_example'];
+  protected static $modules = ['node', 'node_type_example'];
 
   /**
    * The installation profile to use with this test.

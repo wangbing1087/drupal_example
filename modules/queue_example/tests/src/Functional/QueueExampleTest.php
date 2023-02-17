@@ -22,7 +22,7 @@ class QueueExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['queue_example'];
+  protected static $modules = ['queue_example'];
 
   /**
    * The installation profile to use with this test.

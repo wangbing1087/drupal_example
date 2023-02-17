@@ -26,7 +26,7 @@ class RobotReferenceTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['config_entity_example', 'node', 'field_ui'];
+  protected static $modules = ['config_entity_example', 'node', 'field_ui'];
 
   /**
    * {@inheritdoc}

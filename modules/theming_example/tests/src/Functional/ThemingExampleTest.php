@@ -22,7 +22,7 @@ class ThemingExampleTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['theming_example'];
+  protected static $modules = ['theming_example'];
 
   /**
    * The installation profile to use with this test.

@@ -22,7 +22,7 @@ class HooksExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['help', 'hooks_example'];
+  protected static $modules = ['help', 'hooks_example'];
 
   /**
    * {@inheritdoc}

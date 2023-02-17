@@ -27,7 +27,7 @@ class EmailExampleTest extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['email_example'];
+  protected static $modules = ['email_example'];
 
   /**
    * The installation profile to use with this test.

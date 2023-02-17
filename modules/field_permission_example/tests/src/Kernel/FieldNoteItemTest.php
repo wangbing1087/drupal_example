@@ -34,7 +34,7 @@ class FieldNoteItemTest extends FieldKernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['field_permission_example'];
+  protected static $modules = ['field_permission_example'];
 
   /**
    * {@inheritdoc}

@@ -26,7 +26,7 @@ class TabledragMenuTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['tabledrag_example'];
+  protected static $modules = ['tabledrag_example'];
 
   /**
    * The installation profile to use with this test.

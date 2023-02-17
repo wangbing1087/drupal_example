@@ -26,7 +26,7 @@ class EventsExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['events_example'];
+  protected static $modules = ['events_example'];
 
   /**
    * {@inheritdoc}

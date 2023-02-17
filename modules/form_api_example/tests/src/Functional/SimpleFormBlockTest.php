@@ -20,7 +20,7 @@ class SimpleFormBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['block', 'form_api_example'];
+  protected static $modules = ['block', 'form_api_example'];
 
   /**
    * Test of paths through the example wizard form.

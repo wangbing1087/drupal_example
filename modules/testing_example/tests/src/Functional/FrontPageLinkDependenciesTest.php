@@ -30,7 +30,7 @@ class FrontPageLinkDependenciesTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['node', 'block', 'user'];
+  protected static $modules = ['node', 'block', 'user'];
 
   /**
    * Our node type.

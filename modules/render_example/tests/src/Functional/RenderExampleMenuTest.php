@@ -25,7 +25,7 @@ class RenderExampleMenuTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['render_example'];
+  protected static $modules = ['render_example'];
 
   /**
    * The installation profile to use with this test.
