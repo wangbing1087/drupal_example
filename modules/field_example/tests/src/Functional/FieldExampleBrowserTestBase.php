@@ -16,7 +16,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stark';
 
   /**
    * The content type name.

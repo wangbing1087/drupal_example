@@ -22,7 +22,7 @@ class ExampleFunctionalTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'stable';
+  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}
