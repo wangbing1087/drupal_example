@@ -82,9 +82,9 @@ class SessionExampleTest extends BrowserTestBase {
     $assert = $this->assertSession();
     // Get the form and verify that it has placeholders.
     $this->drupalGet(Url::fromRoute('session_example.form'));
-    $assert->responseContains('placeholder="Your name."', 'Name placeholder contains Your name');
-    $assert->responseContains('placeholder="Your email address."', 'Email placeholder contains Your email address.');
-    $assert->responseContains('placeholder="What is your quest?"', 'Quest placeholder contains What is your quest?');
+    $assert->responseContains('placeholder="Your name."');
+    $assert->responseContains('placeholder="Your email address."');
+    $assert->responseContains('placeholder="What is your quest?"');
 
     // Get the report and verify that it doesn't show any session information.
     $this->clickLink('View');
