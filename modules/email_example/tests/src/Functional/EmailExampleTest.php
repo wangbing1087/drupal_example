@@ -56,8 +56,8 @@ class EmailExampleTest extends ExamplesBrowserTestBase {
     $assert->statusCodeEquals(200);
 
     // Verifiy email form has email & message fields.
-    $assert->fieldValueEquals('edit-email', NULL);
-    $assert->fieldValueEquals('edit-message', NULL);
+    $assert->fieldExists('edit-email');
+    $assert->fieldExists('edit-message');
 
     // Verifiy email form is submitted.
     $edit = ['email' => 'example@example.com', 'message' => 'test'];
