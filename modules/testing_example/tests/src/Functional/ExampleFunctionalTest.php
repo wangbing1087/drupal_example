@@ -52,6 +52,12 @@ class ExampleFunctionalTest extends ExamplesBrowserTestBase {
   protected function setUp(): void {
     parent::setUp();
 
+    // We have to create a content type because testing uses the 'testing'
+    // profile, which has no content types by default.
+    // Although we could have visited admin pages and pushed buttons to create
+    // the content type, there happens to be function we can use in this case.
+    $this->createContentType(['type' => 'test_content_type']);
+
     // Create users.
     $this->adminUser = $this->drupalCreateUser([
       'access administration pages',
@@ -59,14 +65,10 @@ class ExampleFunctionalTest extends ExamplesBrowserTestBase {
       'administer permissions',
       'administer nodes',
       'administer content types',
+      'create test_content_type content',
     ]);
     $this->authUser = $this->drupalCreateUser([], 'authuser');
 
-    // We have to create a content type because testing uses the 'testing'
-    // profile, which has no content types by default.
-    // Although we could have visited admin pages and pushed buttons to create
-    // the content type, there happens to be function we can use in this case.
-    $this->createContentType(['type' => 'test_content_type']);
   }
 
   /**
