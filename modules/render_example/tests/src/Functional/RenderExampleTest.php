@@ -92,7 +92,7 @@ class RenderExampleTest extends BrowserTestBase {
     $this->drupalGet(Url::fromRoute('render_example.arrays'));
 
     $xpath_array = [
-      // @todo: Add more of these.
+      // @todo Add more of these.
       'foof' => 'Hello ' . $web_user->getAccountName() . ', welcome to the #cache example.',
     ];
     foreach ($xpath_array as $value) {

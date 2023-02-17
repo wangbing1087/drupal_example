@@ -1,14 +1,13 @@
 <?php
 
-/**
- * @file
- */
-
 namespace Drupal\theming_example\Controller;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
+/**
+ *
+ */
 class ThemingPageController {
 
   use StringTranslationTrait;
@@ -86,12 +85,12 @@ class ThemingPageController {
     // Now we'll create a render array which uses our own list formatter,
     // theme('theming_example_list').
     $title = $this->t("The same list rendered by theme('theming_example_list')");
-    $build['our_theme_function'] = array(
+    $build['our_theme_function'] = [
       '#theme' => 'theming_example_list',
       '#attached' => ['library' => ['theming_example/list']],
       '#title' => $title,
       '#items' => $items,
-    );
+    ];
     return $build;
   }
 

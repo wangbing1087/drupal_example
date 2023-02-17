@@ -3,7 +3,6 @@
 namespace Drupal\Tests\theming_example\Functional;
 
 use Drupal\Tests\examples\Functional\ExamplesBrowserTestBase;
-use Drupal\user\Entity\User;
 
 /**
  * Default test case for the action_example module.

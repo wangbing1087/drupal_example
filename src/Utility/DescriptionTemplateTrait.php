@@ -2,8 +2,6 @@
 
 namespace Drupal\examples\Utility;
 
-use Drupal\Core\Extension\ExtensionPathResolver;
-
 /**
  * Trait to implement a "drop-in" template for Example's controllers.
  *

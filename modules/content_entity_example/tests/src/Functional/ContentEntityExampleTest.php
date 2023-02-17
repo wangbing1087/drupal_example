@@ -262,7 +262,7 @@ class ContentEntityExampleTest extends ExamplesBrowserTestBase {
 
     // Create a Contact entity object so that we can query it for it's annotated
     // properties. We don't need to save it.
-    /* @var $contact \Drupal\content_entity_example\Entity\Contact */
+    /** @var \Drupal\content_entity_example\Entity\Contact $contact */
     $contact = Contact::create();
 
     // Create an admin user and log them in. We use the entity annotation for

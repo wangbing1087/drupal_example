@@ -69,7 +69,7 @@ class RobotReferenceTest extends BrowserTestBase {
     //   "Marvin, the paranoid android".
     // - Click save.
     $robot = Robot::loadMultiple();
-    /* @var $robot \Drupal\config_entity_example\Entity\Robot */
+    /** @var \Drupal\config_entity_example\Entity\Robot $robot */
     $robot = reset($robot);
     $this->drupalGet(Url::fromRoute('node.add', ['node_type' => $type->id()]));
     $this->submitForm(['title[0][value]' => 'title', 'field_robot_reference[0][target_id]' => $robot->label()], 'Save');

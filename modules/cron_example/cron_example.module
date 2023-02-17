@@ -47,7 +47,7 @@ function cron_example_cron() {
       \Drupal::messenger()->addMessage(t('cron_example executed at %time', ['%time' => date('c')]));
       \Drupal::state()->set('cron_example_show_status_message', FALSE);
     }
-    \Drupal::state()->set('cron_example.next_execution',  $request_time + $interval);
+    \Drupal::state()->set('cron_example.next_execution', $request_time + $interval);
   }
 }
 

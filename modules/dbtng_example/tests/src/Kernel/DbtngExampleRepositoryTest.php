@@ -46,7 +46,7 @@ class DbtngExampleRepositoryTest extends KernelTestBase {
    * Tests several combinations, adding entries, updating and deleting.
    */
   public function testDbtngExampleStorage() {
-    /* @var $repository \Drupal\dbtng_example\DbtngExampleRepository */
+    /** @var \Drupal\dbtng_example\DbtngExampleRepository $repository */
     $repository = $this->container->get('dbtng_example.repository');
     // Create a new entry.
     $entry = [
