@@ -42,7 +42,7 @@ class FieldNoteItemTest extends FieldKernelTestBase {
    * This sets up the entity_test and user types to use our example
    * field plugins.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $type_manager = $this->container->get('entity_type.manager');
 

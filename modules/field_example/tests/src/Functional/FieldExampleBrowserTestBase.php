@@ -58,7 +58,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
    *
    * Once installed, a content type with the desired field is created.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Install Drupal.
     parent::setUp();
 

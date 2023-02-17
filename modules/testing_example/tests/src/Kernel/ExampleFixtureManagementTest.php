@@ -58,7 +58,7 @@ class ExampleFixtureManagementTest extends KernelTestBase {
    * In a Kernel test, setUp() can be responsible for creating any schema or
    * database configuration which must exist for the test.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Since kernel tests do not install modules, we have to install whatever

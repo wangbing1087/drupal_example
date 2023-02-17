@@ -30,7 +30,7 @@ class CronExampleTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     // Create user. Search content permission granted for the search block to
     // be shown.

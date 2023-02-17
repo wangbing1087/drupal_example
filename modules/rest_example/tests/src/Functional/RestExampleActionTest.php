@@ -32,7 +32,7 @@ class RestExampleActionTest extends BrowserTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function setUp() {
+  protected function setUp(): void {
     parent::setup();
 
     global $base_url;

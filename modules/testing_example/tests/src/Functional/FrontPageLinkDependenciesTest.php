@@ -42,7 +42,7 @@ class FrontPageLinkDependenciesTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Always call the parent setUp().
     parent::setUp();
     // Add the Tools menu block, as provided by the Block module.

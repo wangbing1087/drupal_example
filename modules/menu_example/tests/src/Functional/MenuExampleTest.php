@@ -39,7 +39,7 @@ class MenuExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     // Always call the parent setUp().
     parent::setUp();
     // Add the main menu block, as provided by the Block module.

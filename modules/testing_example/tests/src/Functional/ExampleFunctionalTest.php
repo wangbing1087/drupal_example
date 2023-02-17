@@ -49,7 +49,7 @@ class ExampleFunctionalTest extends ExamplesBrowserTestBase {
    * The setUp() method is run before every other test method, so commonalities
    * should go here.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create users.

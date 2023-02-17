@@ -28,7 +28,7 @@ class SessionExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     // Place our blocks.
     $this->drupalPlaceBlock('local_tasks_block', ['region' => 'content']);

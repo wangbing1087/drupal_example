@@ -34,7 +34,7 @@ class StreamWrapperTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     // We use a mock session here so that our session-based stream wrapper is
     // able to operate. Kernel tests don't normally have a logged-in user, so
