@@ -29,7 +29,7 @@ class StreamWrapperTest extends KernelTestBase {
    *
    * @var array
    */
-  public static $modules = ['stream_wrapper_example', 'file', 'system'];
+  protected static $modules = ['stream_wrapper_example', 'file', 'system'];
 
   /**
    * {@inheritdoc}

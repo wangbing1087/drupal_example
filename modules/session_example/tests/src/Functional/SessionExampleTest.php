@@ -23,7 +23,7 @@ class SessionExampleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['session_example', 'block'];
+  protected static $modules = ['session_example', 'block'];
 
   /**
    * {@inheritdoc}

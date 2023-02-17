@@ -20,7 +20,7 @@ class PagerExampleTest extends ExamplesBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['pager_example', 'node'];
+  protected static $modules = ['pager_example', 'node'];
 
   /**
    * {@inheritdoc}

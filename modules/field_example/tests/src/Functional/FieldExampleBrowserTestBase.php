@@ -51,7 +51,7 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['block', 'node', 'field_ui', 'field_example'];
+  protected static $modules = ['block', 'node', 'field_ui', 'field_example'];
 
   /**
    * {@inheritdoc}

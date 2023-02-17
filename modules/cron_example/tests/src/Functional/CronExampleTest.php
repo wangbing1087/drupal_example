@@ -25,7 +25,7 @@ class CronExampleTest extends ExamplesBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['cron_example', 'node'];
+  protected static $modules = ['cron_example', 'node'];
 
   /**
    * {@inheritdoc}
