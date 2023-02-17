@@ -39,9 +39,10 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
 
     // Details to be submitted for content creation.
     $title = $this->randomMachineName(20);
+    $color = '#00ff00';
     $edit = [
       'title[0][value]' => $title,
-      'field_' . $this->fieldName . '[0][value]' => '#00ff00',
+      'field_' . $this->fieldName . '[0][value]' => $color,
     ];
 
     // Submit the content creation form.
@@ -49,7 +50,33 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
     $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
 
     // Verify color.
-    $assert->pageTextContains('The content area color has been changed to #00ff00');
+    $assert->pageTextContains('The content area color has been changed to ' . $color);
+
+    // Test the formatter's configuration options. First verify the foreground
+    // color calculation logic is enabled by default and working.
+    $assert->elementAttributeNotContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: inherit');
+    $assert->elementAttributeContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: black');
+
+    // Then toggle the setting off.
+    \Drupal::service('entity_display.repository')
+      ->getViewDisplay('node', $this->contentTypeName)
+      ->setComponent('field_' . $this->fieldName, [
+        'label' => 'inline',
+        'weight' => 20,
+        'type' => 'field_example_color_background',
+        'settings' => [
+          'adjust_text_color' => 0,
+        ],
+      ])
+      ->save();
+
+    // Clear the cache to ensure we get updated field output.
+    //drupal_flush_all_caches();
+    $this->getSession()->reload();
+    $assert = $this->assertSession();
+
+    $assert->elementAttributeContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: inherit');
+    $assert->elementAttributeNotContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: black');
   }
 
   /**
