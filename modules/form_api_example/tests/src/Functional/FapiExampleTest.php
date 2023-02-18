@@ -45,7 +45,6 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
   public function testFunctional() {
     // Please fail this one first.
     $this->doTestRoutes();
-
     $this->doTestAjaxAddMore();
     $this->doTestAjaxColorForm();
     $this->doTestBuildDemo();
@@ -285,57 +284,49 @@ class FapiExampleTest extends ExamplesBrowserTestBase {
    * Test the Ajax Add More demo form.
    */
   public function doTestAjaxAddMore() {
-    // XPath for the remove button. We have to use contains() here because the
-    // ID will have a hash value at the end.
-    $button_xpath = '//input[contains(@id,"edit-names-fieldset-actions-remove-name")]';
-
     $ajax_addmore_url = Url::fromRoute('form_api_example.ajax_addmore');
 
     // Verify that anonymous can access the ajax_add_more page.
     $this->drupalGet($ajax_addmore_url);
-    $this->assertSession()->statusCodeEquals(200);
+    $assert_session = $this->assertSession();
+    $assert_session->statusCodeEquals(200);
     // Verify that there is no remove button.
-    $this->assertEmpty($this->xpath($button_xpath));
+    $assert_session->buttonNotExists('Remove one');
 
     $name_one = 'John';
     $name_two = 'Smith';
 
     // Enter the value in field-1.
     // and click on 'Add one more' button.
-    $edit = [];
-    $edit['names_fieldset[name][0]'] = $name_one;
-    $this->drupalGet($ajax_addmore_url);
-    $this->submitForm($edit, 'Add one more');
+    $assert_session->fieldExists('names_fieldset[name][0]')->setValue($name_one);
+    $assert_session->buttonExists('Add one more')->press();
 
     // Verify field-2 gets added.
     // and value of field-1 should be retained.
-    $this->assertEquals($name_one, $this->xpath('//input[@id = "edit-names-fieldset-name-0"]'));
-    $this->assertNotEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-1"]'));
-    // Verify that the remove button was added.
-    $this->assertNotEmpty($this->xpath($button_xpath));
+    $assert_session->fieldValueEquals('names_fieldset[name][0]', $name_one);
+    $assert_session->fieldValueEquals('names_fieldset[name][1]', '');
+    $assert_session->buttonExists('Remove one');
 
     // Enter the value in field-2
     // and click on 'Add one more' button.
-    $edit['names_fieldset[name][1]'] = $name_two;
-    $this->submitForm($edit, 'Add one more');
+    $assert_session->fieldExists('names_fieldset[name][1]')->setValue($name_two);
+    $assert_session->buttonExists('Add one more')->press();
 
     // Verify field-3 gets added.
     // and value of field-1 and field-2 are retained.
-    $this->assertEquals($name_one, $this->xpath('//input[@id = "edit-names-fieldset-name-0"]'));
-    $this->assertEquals($name_two, $this->xpath('//input[@id = "edit-names-fieldset-name-1"]'));
-    $this->assertNotEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-2"]'));
+    $assert_session->fieldValueEquals('names_fieldset[name][0]', $name_one);
+    $assert_session->fieldValueEquals('names_fieldset[name][1]', $name_two);
+    $assert_session->fieldValueEquals('names_fieldset[name][2]', '');
 
     // Click on "Remove one" button to test remove button works.
     // and value of field-1 and field-2 are retained.
-    $this->submitForm([], 'Remove one');
-    $this->assertEquals($name_one, $this->xpath('//input[@id = "edit-names-fieldset-name-0"]'));
-    $this->assertEquals($name_two, $this->xpath('//input[@id = "edit-names-fieldset-name-1"]'));
-    $this->assertEmpty($this->xpath('//input[@id = "edit-names-fieldset-name-2"]'));
+    $assert_session->buttonExists('Remove one')->press();
+    $assert_session->fieldValueEquals('names_fieldset[name][0]', $name_one);
+    $assert_session->fieldValueEquals('names_fieldset[name][1]', $name_two);
 
     // Submit the form and verify the results.
-    $this->submitForm([], 'Submit');
-    $this->assertSession()->pageTextContains('These people are coming to the picnic: ' . $name_one . ', ' . $name_two);
-
+    $assert_session->buttonExists('Submit')->press();
+    $assert_session->pageTextContains('These people are coming to the picnic: ' . $name_one . ', ' . $name_two);
   }
 
 }
