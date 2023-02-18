@@ -92,8 +92,10 @@ class NodeTypeExampleTest extends ExamplesBrowserTestBase {
     // Get a list of content types.
     $this->drupalGet('/admin/structure/types');
     // Verify that these content types show up in the user interface.
-    $assert->pageTextContains('Example: Basic Content Type', 'Basic content type found.');
-    $assert->pageTextContains('Example: Locked Content Type', 'Locked content type found.');
+    // Basic content type found.
+    $assert->pageTextContains('Example: Basic Content Type');
+    // Locked content type found.
+    $assert->pageTextContains('Example: Locked Content Type');
 
     // Check for the locked status of our content types.
     // $nodeType will be of type Drupal\node\NodeTypeInterface.
