@@ -78,10 +78,12 @@ class PluginTypeExampleTest extends ExamplesBrowserTestBase {
     $assert->statusCodeEquals(200);
 
     // Check we see the plugin id.
-    $assert->pageTextContains('ham_sandwich', 'The plugin ID was not output.');
+    // The plugin ID was not output.
+    $assert->pageTextContains('ham_sandwich');
 
     // Check we see the plugin description.
-    $assert->pageTextContains('Ham, mustard, rocket, sun-dried tomatoes.', 'The plugin description was not output.');
+    // The plugin description was not output.
+    $assert->pageTextContains('Ham, mustard, rocket, sun-dried tomatoes.');
   }
 
 }
