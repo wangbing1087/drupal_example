@@ -49,11 +49,10 @@ class TextWidgetTest extends FieldExampleBrowserTestBase {
 
     // Create the content.
     $this->submitForm($edit, 'Save');
-    $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
+    $assert->pageTextContains("$this->contentTypeName $title has been created");
 
     // Verify the value is shown when viewing this node.
-    $field_p = $this->xpath("//div[contains(@class,'field--type-field-example-rgb')]/div/p");
-    $this->assertEquals('The color code in this field is #000001', (string) $field_p[0]->getText());
+    $assert->pageTextContains('The color code in this field is #000001');
   }
 
   /**
@@ -95,12 +94,11 @@ class TextWidgetTest extends FieldExampleBrowserTestBase {
 
     // Now we can fill in the second item in the multivalue field and save.
     $this->submitForm($edit, 'Save');
-    $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
+    $assert->pageTextContains("$this->contentTypeName $title has been created");
 
     // Verify the value is shown when viewing this node.
-    $field_p = $this->xpath("//div[contains(@class,'field--type-field-example-rgb')]/div/div/p");
-    $this->assertEquals('The color code in this field is #00ff00', (string) $field_p[0]->getText());
-    $this->assertEquals('The color code in this field is #ffffff', (string) $field_p[1]->getText());
+    $assert->pageTextContains('The color code in this field is #00ff00');
+    $assert->pageTextContains('The color code in this field is #ffffff');
   }
 
 }
