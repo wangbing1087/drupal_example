@@ -66,7 +66,7 @@ class MultistepFormTest extends BrowserTestBase {
     $this->submitForm(['color' => 'neon green'], 'Submit');
 
     // This should take us back to the first page with a status message.
-    $messages = $this->getSession()->getPage()->find('css', 'ul.messages__list');
+    $messages = $this->getSession()->getPage()->find('css', 'div[data-drupal-messages] ul');
     $message_text = $messages->getHtml();
     $this->assertStringContainsString('Bozo Di Clown', $message_text);
     $this->assertStringContainsString('1980', $message_text);
