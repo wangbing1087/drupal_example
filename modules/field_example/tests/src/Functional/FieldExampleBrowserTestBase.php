@@ -142,15 +142,6 @@ abstract class FieldExampleBrowserTestBase extends ExamplesBrowserTestBase {
 
     // And now we save the cardinality settings.
     $this->submitForm($edit, 'Save field settings');
-    dump(
-      (string) new FormattableMarkup('Saved settings for field %field_name with widget %widget_type and cardinality %cardinality',
-        [
-          '%field_name' => $field_name,
-          '%widget_type' => $widget_type,
-          '%cardinality' => $cardinality,
-        ]
-      )
-    );
     $assert->pageTextContains((string) new FormattableMarkup('Updated field @name field settings.', ['@name' => $field_name]));
 
     // Set the widget type for the newly created field.
