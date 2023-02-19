@@ -2,6 +2,6 @@ name: 'Sample Description Template Test'
 type: module
 description: 'Support module for testing the DescriptionTemplateTrait.'
 package: Testing
-core_version_requirement: ^9.4 || ^10
+version: VERSION
 dependencies:
   - examples:examples
