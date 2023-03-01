@@ -66,7 +66,7 @@ class FileExampleStateHelper {
    * Removes the default file and default directory from the state storage.
    */
   public function deleteDefaultState(): void {
-    $this->state->delete(key: self::KEY_DEFAULT_DIRECTORY);
+    $this->state->delete(self::KEY_DEFAULT_DIRECTORY);
     $this->state->delete(self::KEY_DEFAULT_FILE);
   }
 
