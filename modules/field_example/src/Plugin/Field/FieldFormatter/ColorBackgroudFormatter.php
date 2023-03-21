@@ -64,8 +64,8 @@ class ColorBackgroudFormatter extends FormatterBase {
     // settingsForm(), and the schema defined in
     // config/schema/field_example.schema.yml.
     return [
-        'adjust_text_color' => TRUE,
-      ] + parent::defaultSettings();
+      'adjust_text_color' => TRUE,
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -129,9 +129,9 @@ class ColorBackgroudFormatter extends FormatterBase {
   protected function lightness(string $color) {
     $hex = ltrim($color, '#');
     // Convert the hex string to RGB.
-    $r = hexdec($hex[0].$hex[1]);
-    $g = hexdec($hex[2].$hex[3]);
-    $b = hexdec($hex[4].$hex[5]);
+    $r = hexdec($hex[0] . $hex[1]);
+    $g = hexdec($hex[2] . $hex[3]);
+    $b = hexdec($hex[4] . $hex[5]);
 
     // Calculate the HSL lightness value and return that as a percent.
     return ((max($r, $g, $b) + min($r, $g, $b)) / 510.0) * 100;

@@ -6,7 +6,7 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Tests\examples\Functional\ExamplesBrowserTestBase;
 
 /**
- * Class FieldExampleBrowserTestBase.
+ * The Base Class for field example browser testing.
  *
  * @group field_example
  * @group examples

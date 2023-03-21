@@ -54,8 +54,8 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
 
     // Test the formatter's configuration options. First verify the foreground
     // color calculation logic is enabled by default and working.
-    $assert->elementAttributeNotContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: inherit');
-    $assert->elementAttributeContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: black');
+    $assert->elementAttributeNotContains('css', 'p[style*="background-color: ' . $color . '"]', 'style', 'color: inherit');
+    $assert->elementAttributeContains('css', 'p[style*="background-color: ' . $color . '"]', 'style', 'color: black');
 
     // Then toggle the setting off.
     \Drupal::service('entity_display.repository')
@@ -71,12 +71,12 @@ class ColorBackgroundFormatterTest extends FieldExampleBrowserTestBase {
       ->save();
 
     // Clear the cache to ensure we get updated field output.
-    //drupal_flush_all_caches();
+    // drupal_flush_all_caches();
     $this->getSession()->reload();
     $assert = $this->assertSession();
 
-    $assert->elementAttributeContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: inherit');
-    $assert->elementAttributeNotContains('css', 'p[style*="background-color: '. $color . '"]', 'style', 'color: black');
+    $assert->elementAttributeContains('css', 'p[style*="background-color: ' . $color . '"]', 'style', 'color: inherit');
+    $assert->elementAttributeNotContains('css', 'p[style*="background-color: ' . $color . '"]', 'style', 'color: black');
   }
 
   /**

@@ -167,7 +167,7 @@ class FileExampleReadWriteForm extends FormBase {
     $form['debug']['reset_session'] = [
       '#type' => 'submit',
       '#value' => $this->t('Reset the Session'),
-      '#submit' => [[$this->submitHandlerHelper,'handleResetSession']],
+      '#submit' => [[$this->submitHandlerHelper, 'handleResetSession']],
     ];
 
     return $form;
@@ -186,7 +186,7 @@ class FileExampleReadWriteForm extends FormBase {
 
     $filename = $this->fileSystem->basename($destination);
     if (!$filename) {
-      $form_state->setError($form['write_file']['destination'], $this->t('The destination %destination is not valid.', array('%destination' => $destination)));
+      $form_state->setError($form['write_file']['destination'], $this->t('The destination %destination is not valid.', ['%destination' => $destination]));
       return;
     }
 
